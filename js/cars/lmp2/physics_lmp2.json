@@ -1,0 +1,54 @@
+{
+    "tyre_physics": {
+        "compound_medium": {
+            "display_name": "Dry Medium",
+            "pressure_range_kpa": [
+                136.0,
+                166.0
+            ],
+            "optimal_pressure_kpa": 155.0,
+            "optimal_temp_c": 90,
+            "pacejka_approx": {
+                "B": 14.2,
+                "C": 1.55,
+                "D": 2.10,
+                "E": -0.20
+            }
+        },
+        "compound_wet": {
+            "display_name": "Wet",
+            "pressure_range_kpa": [
+                136.0,
+                166.0
+            ],
+            "optimal_pressure_kpa": 160.0,
+            "optimal_temp_c": 65,
+            "pacejka_approx": {
+                "B": 10.5,
+                "C": 1.35,
+                "D": 1.65,
+                "E": -0.15
+            }
+        }
+    },
+    "cars": [
+        {
+            "id": "oreca_07_gibson_lmp2",
+            "mass_kg": 930,
+            "weight_dist_f": 0.465,
+            "h_cg_mm": 315,
+            "wheelbase_m": 3.005,
+            "motion_ratio": {
+                "front": 1.0,
+                "rear": 1.0
+            },
+            "steering_ratio": 12.5,
+            "aero": {
+                "base_cl": -4.70,
+                "base_cd": 1.15,
+                "cop_front": 0.395,
+                "sensitivity": "high_pitch"
+            }
+        }
+    ]
+}

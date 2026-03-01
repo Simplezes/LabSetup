@@ -1,0 +1,170 @@
+{
+    "tyre_physics": {
+        "compound_medium": {
+            "pressure_range_kpa": [
+                136,
+                210
+            ],
+            "optimal_pressure_kpa": 190.0,
+            "optimal_temp_c": 85,
+            "pacejka_approx": {
+                "B": 12.5,
+                "C": 1.45,
+                "D": 1.75,
+                "E": -0.15
+            }
+        },
+        "compound_wet": {
+            "pressure_range_kpa": [
+                136,
+                210
+            ],
+            "optimal_pressure_kpa": 200.0,
+            "optimal_temp_c": 60,
+            "pacejka_approx": {
+                "B": 9.2,
+                "C": 1.3,
+                "D": 1.4,
+                "E": -0.1
+            }
+        }
+    },
+    "cars": [
+        {
+            "id": "bmw_m4_lmgt3",
+            "mass_kg": 1339,
+            "weight_dist_f": 0.515,
+            "h_cg_mm": 415,
+            "wheelbase_m": 2.917,
+            "motion_ratio": {
+                "front": 0.95,
+                "rear": 0.72
+            },
+            "steering_ratio": 14.2,
+            "aero": {
+                "base_cl": -2.85,
+                "base_cd": 0.69,
+                "cop_front": 0.38
+            }
+        },
+        {
+            "id": "corvette_z06_r",
+            "mass_kg": 1344,
+            "weight_dist_f": 0.435,
+            "h_cg_mm": 395,
+            "wheelbase_m": 2.723,
+            "motion_ratio": {
+                "front": 0.78,
+                "rear": 0.75
+            },
+            "steering_ratio": 13.5,
+            "aero": {
+                "base_cl": -3.10,
+                "base_cd": 0.72,
+                "cop_front": 0.41
+            }
+        },
+        {
+            "id": "ferrari_296_lmgt3",
+            "mass_kg": 1341,
+            "weight_dist_f": 0.425,
+            "h_cg_mm": 390,
+            "wheelbase_m": 2.660,
+            "motion_ratio": {
+                "front": 0.81,
+                "rear": 0.79
+            },
+            "steering_ratio": 13.1,
+            "aero": {
+                "base_cl": -3.35,
+                "base_cd": 0.75,
+                "cop_front": 0.43
+            }
+        },
+        {
+            "id": "ford_mustang_lmgt3",
+            "mass_kg": 1329,
+            "weight_dist_f": 0.50,
+            "h_cg_mm": 410,
+            "wheelbase_m": 2.720,
+            "motion_ratio": {
+                "front": 0.82,
+                "rear": 0.74
+            },
+            "steering_ratio": 14.5,
+            "aero": {
+                "base_cl": -2.90,
+                "base_cd": 0.71,
+                "cop_front": 0.39
+            }
+        },
+        {
+            "id": "lamborghini_huracan_lmgt3_evo2",
+            "mass_kg": 1355,
+            "weight_dist_f": 0.41,
+            "h_cg_mm": 390,
+            "wheelbase_m": 2.620,
+            "motion_ratio": {
+                "front": 0.76,
+                "rear": 0.76
+            },
+            "steering_ratio": 13.0,
+            "aero": {
+                "base_cl": -3.30,
+                "base_cd": 0.76,
+                "cop_front": 0.42
+            }
+        },
+        {
+            "id": "lexus_rcf_lmgt3",
+            "mass_kg": 1355,
+            "weight_dist_f": 0.52,
+            "h_cg_mm": 420,
+            "wheelbase_m": 2.730,
+            "motion_ratio": {
+                "front": 0.85,
+                "rear": 0.70
+            },
+            "steering_ratio": 15.0,
+            "aero": {
+                "base_cl": -2.75,
+                "base_cd": 0.68,
+                "cop_front": 0.37
+            }
+        },
+        {
+            "id": "mclaren_720s_lmgt3_evo",
+            "mass_kg": 1345,
+            "weight_dist_f": 0.42,
+            "h_cg_mm": 385,
+            "wheelbase_m": 2.670,
+            "motion_ratio": {
+                "front": 0.79,
+                "rear": 0.78
+            },
+            "steering_ratio": 13.2,
+            "aero": {
+                "base_cl": -3.40,
+                "base_cd": 0.74,
+                "cop_front": 0.44
+            }
+        },
+        {
+            "id": "mercedes_amg_lmgt3",
+            "mass_kg": 1360,
+            "weight_dist_f": 0.485,
+            "h_cg_mm": 405,
+            "wheelbase_m": 2.625,
+            "motion_ratio": {
+                "front": 0.74,
+                "rear": 0.72
+            },
+            "steering_ratio": 13.8,
+            "aero": {
+                "base_cl": -3.05,
+                "base_cd": 0.73,
+                "cop_front": 0.40
+            }
+        }
+    ]
+}

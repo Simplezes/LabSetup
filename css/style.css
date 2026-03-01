@@ -1,0 +1,1402 @@
+/* ─── Design Tokens ──────────────────────────────────────────────────────────── */
+:root {
+    --blue: #0ea5e9;
+    /* Sharp Cyan Accent */
+    --blue-dim: #0284c7;
+    --blue-glow: rgba(14, 165, 233, 0.1);
+    --green: #10b981;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --bg: #020617;
+    /* Solid Deep Slate/Black */
+    --panel: #0f172a;
+    /* Solid Slate Panel */
+    --panel-alt: #1e293b;
+    --border: rgba(255, 255, 255, 0.04);
+    --border-bright: rgba(255, 255, 255, 0.08);
+    --text-dim: #64748b;
+    --text-muted: #94a3b8;
+    --radius-lg: 4px;
+    /* Sharper edges */
+    --radius-sm: 2px;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── Garage & Animations ───────────────────────────────────────────────────── */
+.garage-card.active {
+    background: rgba(14, 165, 233, 0.05);
+    /* Very subtle activity indicator */
+    border-color: var(--blue);
+}
+
+.garage-card.active h3 {
+    color: var(--blue);
+}
+
+/* ─── Brand Colors (Minimalist) ────────────────────────────────────────────── */
+.brand-bmw:hover,
+.brand-bmw.active {
+    border-color: #0066b2;
+}
+
+.brand-bmw.active {
+    background: rgba(0, 102, 178, 0.04);
+}
+
+.brand-bmw:hover h3,
+.brand-bmw.active h3 {
+    color: #0066b2;
+}
+
+.brand-corvette:hover,
+.brand-corvette.active {
+    border-color: #ffcc00;
+}
+
+.brand-corvette.active {
+    background: rgba(255, 204, 0, 0.04);
+}
+
+.brand-corvette:hover h3,
+.brand-corvette.active h3 {
+    color: #ffcc00;
+}
+
+.brand-ferrari:hover,
+.brand-ferrari.active {
+    border-color: #ff0000;
+}
+
+.brand-ferrari.active {
+    background: rgba(255, 0, 0, 0.04);
+}
+
+.brand-ferrari:hover h3,
+.brand-ferrari.active h3 {
+    color: #ff0000;
+}
+
+.brand-ford:hover,
+.brand-ford.active {
+    border-color: #003399;
+}
+
+.brand-ford.active {
+    background: rgba(0, 51, 153, 0.04);
+}
+
+.brand-ford:hover h3,
+.brand-ford.active h3 {
+    color: #003399;
+}
+
+.brand-lexus:hover,
+.brand-lexus.active {
+    border-color: #4b0082;
+}
+
+.brand-lexus.active {
+    background: rgba(75, 0, 130, 0.04);
+}
+
+.brand-lexus:hover h3,
+.brand-lexus.active h3 {
+    color: #4b0082;
+}
+
+.brand-mclaren:hover,
+.brand-mclaren.active {
+    border-color: #ff8700;
+}
+
+.brand-mclaren.active {
+    background: rgba(255, 135, 0, 0.04);
+}
+
+.brand-mclaren:hover h3,
+.brand-mclaren.active h3 {
+    color: #ff8700;
+}
+
+.brand-mercedes:hover,
+.brand-mercedes.active {
+    border-color: #00a19c;
+}
+
+.brand-mercedes.active {
+    background: rgba(0, 161, 156, 0.04);
+}
+
+.brand-mercedes:hover h3,
+.brand-mercedes.active h3 {
+    color: #00a19c;
+}
+
+.brand-lamborghini:hover,
+.brand-lamborghini.active {
+    border-color: #ff8000;
+}
+
+.brand-lamborghini.active {
+    background: rgba(255, 128, 0, 0.04);
+}
+
+.brand-lamborghini:hover h3,
+.brand-lamborghini.active h3 {
+    color: #ff8000;
+}
+
+.brand-oreca:hover,
+.brand-oreca.active {
+    border-color: #3b82f6;
+}
+
+.brand-oreca.active {
+    background: rgba(59, 130, 246, 0.04);
+}
+
+.brand-oreca:hover h3,
+.brand-oreca.active h3 {
+    color: #3b82f6;
+}
+
+.brand-ligier:hover,
+.brand-ligier.active {
+    border-color: #0ea5e9;
+}
+
+.brand-ligier.active {
+    background: rgba(14, 165, 233, 0.04);
+}
+
+.brand-ligier:hover h3,
+.brand-ligier.active h3 {
+    color: #0ea5e9;
+}
+
+.brand-ginetta:hover,
+.brand-ginetta.active {
+    border-color: #f97316;
+}
+
+.brand-ginetta.active {
+    background: rgba(249, 115, 22, 0.04);
+}
+
+.brand-ginetta:hover h3,
+.brand-ginetta.active h3 {
+    color: #f97316;
+}
+
+.animate-in {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes zoom-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.zoom-in {
+    animation: zoom-in 0.4s ease-out forwards;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fade-in 0.4s ease-out forwards;
+}
+
+/* ─── Weather Chips ──────────────────────────────────────────────────────────── */
+.weather-chip.active {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: var(--blue);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+}
+
+/* ─── Top Racing Stripe ──────────────────────────────────────────────────────── */
+body::before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    /* Slightly thicker */
+    background: linear-gradient(90deg, transparent 0%, var(--blue) 30%, var(--green) 70%, transparent 100%);
+    z-index: 100;
+    opacity: 0.8;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────────── */
+.sync-font {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+}
+
+.font-mono {
+    font-family: 'Roboto Mono', monospace !important;
+}
+
+/* ─── Glass Panels ───────────────────────────────────────────────────────────── */
+.glass {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    border-radius: var(--radius-lg);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: relative;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass:hover {
+    border-left-color: #60a5fa;
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(59, 130, 246, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Corner accent on cards */
+.glass::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    border-top: 1px solid rgba(59, 130, 246, 0.15);
+    border-right: 1px solid rgba(59, 130, 246, 0.15);
+    border-top-right-radius: var(--radius-lg);
+    pointer-events: none;
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 4px;
+    /* Slightly wider */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--blue-dim);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--blue);
+}
+
+/* ─── Range Sliders ──────────────────────────────────────────────────────────── */
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    background:
+        linear-gradient(to right,
+            transparent 0%,
+            transparent calc(var(--rec, -10px) - 1px),
+            #fbbf24 calc(var(--rec, -10px) - 1px),
+            #fbbf24 calc(var(--rec, -10px) + 1px),
+            transparent calc(var(--rec, -10px) + 1px),
+            transparent 100%),
+        linear-gradient(to right,
+            var(--blue) 0%,
+            var(--blue) var(--val, 50%),
+            #64748b var(--val, 50%),
+            #64748b var(--rec, var(--val, 50%)),
+            #1e293b var(--rec, var(--val, 50%)),
+            #1e293b 100%);
+    height: 6px;
+    width: 100%;
+    cursor: pointer;
+    touch-action: none;
+    border-radius: 1px;
+    transition: background 0.1s;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 18px;
+    width: 2px;
+    background: #ffffff;
+    border-radius: 1px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.2s, transform 0.15s;
+}
+
+input[type=range]:hover::-webkit-slider-thumb {
+    background: var(--blue);
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.6);
+    height: 20px;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+/* ─── Radar / Spider Chart ───────────────────────────────────────────────────── */
+.spider-poly {
+    fill: rgba(0, 132, 255, 0.15);
+    stroke: var(--blue);
+    stroke-width: 2;
+    /* Thicker */
+    filter: drop-shadow(0 0 6px rgba(0, 132, 255, 0.4));
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ghost-poly {
+    fill: rgba(0, 232, 122, 0.05);
+    stroke: rgba(0, 232, 122, 0.4);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 3;
+    transition: all 0.5s ease;
+}
+
+/* ─── Smart Sidebar Sections ────────────────────────────────────────────────── */
+.smart-section {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-lg);
+    padding: 1px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.smart-section .section-content {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.smart-section .sidebar-section-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    margin-bottom: 0px;
+    padding: 12px 16px;
+    z-index: 10;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    user-select: none;
+}
+
+.smart-section .sidebar-section-header:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.smart-section .section-content {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.3s ease;
+    opacity: 1;
+}
+
+.smart-section.collapsed .section-content {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    pointer-events: none;
+}
+
+.smart-section.collapsed .sidebar-section-header {
+    border-bottom-color: transparent !important;
+}
+
+.chevron-icon {
+    margin-left: auto;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.3;
+}
+
+.smart-section.collapsed .chevron-icon {
+    transform: rotate(-90deg);
+}
+
+.sidebar-section-header:hover .chevron-icon {
+    opacity: 0.8;
+}
+
+.selection-status {
+    margin-left: auto;
+    font-size: 7px;
+    font-weight: 800;
+    color: var(--blue);
+    background: rgba(14, 165, 233, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 1;
+}
+
+/* ─── Sidebar Card Base ─────────────────────────────────────────────────────── */
+.sidebar-card-base {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.015);
+    border-radius: var(--radius-lg);
+    padding: 12px 16px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-card-base:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-card-base::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0.4);
+    width: 2px;
+    height: 100%;
+    background: transparent;
+    transition: all 0.25s ease;
+    border-radius: 0 2px 2px 0;
+}
+
+.sidebar-card-base:hover::before {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-50%) scaleY(0.7);
+}
+
+/* Redefining track-btn to use the new card base logic */
+.track-btn {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.015);
+    border-radius: var(--radius-lg);
+    padding: 12px 14px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 800;
+    color: var(--text-muted);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2px;
+}
+
+.track-btn:hover {
+    border-color: rgba(14, 165, 233, 0.3);
+    background: rgba(14, 165, 233, 0.04);
+    color: #fff;
+    padding-left: 18px;
+}
+
+.track-btn.active {
+    background: linear-gradient(90deg, rgba(14, 165, 233, 0.15), rgba(14, 165, 233, 0.03));
+    border-color: var(--blue);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1);
+}
+
+.track-btn.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: var(--blue);
+    box-shadow: 0 0 8px var(--blue);
+}
+
+/* ─── Section Header Redesign ─────────────────────────────────────────────────── */
+.sidebar-section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.sidebar-section-header .accent-bar {
+    width: 3px;
+    height: 14px;
+    background: var(--blue);
+    border-radius: 1px;
+    box-shadow: 0 0 8px var(--blue-glow);
+}
+
+.sidebar-section-header span {
+    font-size: 9px;
+    font-weight: 900;
+    color: #f8fafc;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+}
+
+/* ─── Value Readout Chip ─────────────────────────────────────────────────────── */
+.value-chip {
+    background: rgba(0, 132, 255, 0.08);
+    border: 1px solid rgba(0, 132, 255, 0.2);
+    border-radius: 2px;
+    padding: 3px 10px;
+    line-height: 1.5;
+    font-weight: 800;
+}
+
+/* ─── Sync Button ────────────────────────────────────────────────────────────── */
+#sync {
+    letter-spacing: 0.15em;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+#sync::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+}
+
+#sync:hover::after {
+    transform: translateX(100%);
+}
+
+#sync:hover {
+    box-shadow: 0 0 20px var(--green-glow);
+}
+
+#sync:active {
+    transform: scale(0.97);
+}
+
+/* ─── Fix Protocol Grid ──────────────────────────────────────────────────────── */
+.fix-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.2s ease;
+}
+
+.fix-row:last-child {
+    border-bottom: none;
+}
+
+.fix-row span:first-child {
+    font-size: 13px;
+    /* Increased from 10px */
+    letter-spacing: 0.02em;
+}
+
+.fix-row:hover {
+    background: rgba(0, 132, 255, 0.03);
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: -8px;
+    margin-right: -8px;
+    border-radius: 2px;
+}
+
+/* ─── CoP Bar ────────────────────────────────────────────────────────────────── */
+#cop {
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Header Separator ───────────────────────────────────────────────────────── */
+header {
+    position: relative;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 132, 255, 0.3), var(--border), transparent);
+}
+
+/* ─── Compound Buttons ───────────────────────────────────────────────────────── */
+.comp-btn {
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.015);
+    border-radius: var(--radius-sm);
+    padding: 10px 8px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.comp-btn:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    background: rgba(59, 130, 246, 0.04);
+    color: #fff;
+}
+
+.comp-btn.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #000;
+    box-shadow: 0 0 16px var(--blue-glow);
+}
+
+/* ─── Mode Toggle ────────────────────────────────────────────────────────────── */
+.mode-toggle button {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px 16px;
+    border-radius: 2px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.mode-toggle button.active {
+    background: rgba(0, 132, 255, 0.2);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 132, 255, 0.1);
+}
+
+/* ─── Conditional Visibility ─────────────────────────────────────────────────── */
+body.mode-basic .setting-advanced {
+    display: none !important;
+}
+
+/* ─── Responsive Adjustments ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    #trackContainer {
+        height: 250px;
+    }
+}
+
+/* ─── Tyre Thermal Grid ──────────────────────────────────────────────────────── */
+.tyre-thermal-cell {
+    background: #171e2b;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+    transition: background 0.5s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.tyre-thermal-cell:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+/* ─── Damper Response Grid ─────────────────────────────────────────────────── */
+.damper-cell {
+    background: #171e2b;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.damper-cell:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+/* ─── Clickable Readouts ─────────────────────────────────────────────────────── */
+[id$="C_label"]:not(#rakeC) {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+[id$="C"]:not(#rakeC):hover {
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Axle Headers ─────────────────────────────────────────────────────────── */
+.axle-header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+    margin-top: 8px;
+}
+
+/* ─── Preset Buttons ─────────────────────────────────────────────────────────── */
+.preset-btn {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.015);
+    border-radius: var(--radius-lg);
+    padding: 10px 14px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 800;
+    color: var(--text-muted);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2px;
+}
+
+.preset-btn:hover {
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.04);
+    color: var(--green);
+    padding-left: 18px;
+}
+
+.preset-btn.active {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.03));
+    border-color: var(--green);
+    color: var(--green);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.1);
+}
+
+.preset-btn.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: var(--green);
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+/* Saved custom setup button */
+.preset-btn--saved {
+    border-color: rgba(16, 185, 129, 0.2);
+    background: rgba(16, 185, 129, 0.05);
+    color: #10b981;
+}
+
+.preset-btn--saved:hover {
+    border-color: rgba(16, 185, 129, 0.5);
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    padding-left: 18px;
+}
+
+.preset-btn--saved.active {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.06));
+    border-color: var(--green);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+}
+
+/* ─── Recommendation Markers (Logic handled via JS/CSS variables on slider) ─── */
+
+/* ─── Setup Tabs ────────────────────────────────────────────────────────────── */
+.setup-tab-btn {
+    flex: 1;
+    padding: 10px 6px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
+
+.setup-tab-btn:hover {
+    background: rgba(59, 130, 246, 0.05);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.setup-tab-btn.active {
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%);
+    border-color: var(--blue);
+    border-bottom-width: 2px;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
+}
+
+.setup-tab-content {
+    animation: tabFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes tabFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#linkTiresBtn {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#linkTiresBtn:hover .link-icon {
+    filter: drop-shadow(0 0 4px rgba(14, 165, 233, 0.8));
+}
+
+#linkTiresBtn:hover .unlink-icon {
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+}
+
+/* ─── Garage Panel Redesign ───────────────────────────────────────────────── */
+
+/* Overlay entrance animation */
+#garageOverlay:not(.hidden) {
+    animation: garageIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes garageIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Sticky header frosted background */
+.garage-header-bg {
+    background: rgba(2, 6, 23, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Close button */
+.garage-close-btn {
+    background: transparent;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.garage-close-btn:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Category Pills ─────────────────────────────────────────────────────── */
+.garage-category-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border: 1px solid;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+}
+
+.lmgt3-pill {
+    color: #0ea5e9;
+    border-color: rgba(14, 165, 233, 0.3);
+    background: rgba(14, 165, 233, 0.06);
+}
+
+.lmp2-pill {
+    color: #a78bfa;
+    border-color: rgba(167, 139, 250, 0.3);
+    background: rgba(167, 139, 250, 0.06);
+}
+
+.lmp3-pill {
+    color: #34d399;
+    border-color: rgba(52, 211, 153, 0.3);
+    background: rgba(52, 211, 153, 0.06);
+}
+
+/* ─── Track Strategy UI ──────────────────────────────────────────────────────── */
+.strategy-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.strategy-card:hover {
+    background: rgba(59, 130, 246, 0.05);
+    border-color: rgba(59, 130, 246, 0.2);
+    transform: translateX(4px);
+}
+
+.strategy-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--blue);
+    opacity: 0.8;
+}
+
+.strategy-label {
+    font-size: 8px;
+    font-weight: 800;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.strategy-value {
+    font-size: 11px;
+    font-weight: 700;
+    color: #f8fafc;
+    line-height: 1.1;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────── */
+
+.category-badge {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #475569;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.lmp2-badge {
+    border-color: rgba(167, 139, 250, 0.2);
+    color: #a78bfa;
+}
+
+.lmp3-badge {
+    border-color: rgba(52, 211, 153, 0.2);
+    color: #34d399;
+}
+
+/* ── Car Cards ──────────────────────────────────────────────────────────── */
+.garage-card {
+    background: var(--panel);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.garage-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Brand accent bar at card top ───────────────────────────────────────── */
+.garage-card-accent {
+    height: 2px;
+    width: 100%;
+    transition: opacity 0.2s ease;
+    opacity: 0.5;
+}
+
+.garage-card:hover .garage-card-accent,
+.garage-card.active .garage-card-accent {
+    opacity: 1;
+}
+
+.brand-accent-bmw {
+    background: #0066b2;
+}
+
+.brand-accent-corvette {
+    background: #ffcc00;
+}
+
+.brand-accent-ferrari {
+    background: #ff0000;
+}
+
+.brand-accent-ford {
+    background: #003399;
+}
+
+.brand-accent-lexus {
+    background: #4b0082;
+}
+
+.brand-accent-mclaren {
+    background: #ff8700;
+}
+
+.brand-accent-mercedes {
+    background: #00a19c;
+}
+
+.brand-accent-lamborghini {
+    background: #ff8000;
+}
+
+.brand-accent-oreca {
+    background: #3b82f6;
+}
+
+.brand-accent-ligier {
+    background: #0ea5e9;
+}
+
+.brand-accent-ginetta {
+    background: #f97316;
+}
+
+/* ── Card Footer ────────────────────────────────────────────────────────── */
+.garage-card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 16px 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.garage-select-label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: transparent;
+    transition: color 0.2s ease;
+}
+
+.garage-card:hover .garage-select-label {
+    color: var(--blue);
+}
+
+/* Active state overrides */
+.garage-card.active {
+    background: rgba(14, 165, 233, 0.05);
+    border-color: rgba(14, 165, 233, 0.5);
+}
+
+.garage-card.active .garage-card-accent {
+    opacity: 1;
+}
+
+.garage-card.active h3 {
+    color: var(--blue);
+}
+
+.garage-card.active .garage-select-label {
+    color: var(--blue);
+    opacity: 0.6;
+}
+
+/* ─── Hierarchical Track Dropdown (Premium) ────────────────────────────────── */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    max-height: 480px;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    box-shadow:
+        0 20px 50px -12px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+        0 1px 0 0 rgba(255, 255, 255, 0.05) inset;
+    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    padding: 8px;
+}
+
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.dropdown-category {
+    padding: 12px 12px 4px;
+    font-size: 8px;
+    font-weight: 800;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-category::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(14, 165, 233, 0.2), transparent);
+}
+
+.dropdown-item {
+    width: 80%;
+    padding: 10px 12px;
+    margin-bottom: 2px;
+    text-align: left;
+    border-radius: var(--radius-md);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.dropdown-item.nested {
+    padding-left: 20px;
+    /*background: rgba(255, 255, 255, 0.01);*/
+    border-left: 1px solid rgba(255, 255, 255, 0.03);
+    margin-left: 8px;
+    width: calc(100% - 16px);
+}
+
+.track-branch {
+    font-size: 10px;
+    letter-spacing: -1px;
+    margin-right: 2px;
+    opacity: 0.6;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.05);
+    padding-left: 16px;
+}
+
+.dropdown-item.active {
+    background: rgba(14, 165, 233, 0.08);
+    border-color: rgba(14, 165, 233, 0.2);
+}
+
+.dropdown-item.active .track-name {
+    color: var(--blue);
+}
+
+.dropdown-item.nested {
+    padding-left: 24px;
+}
+
+.dropdown-item.nested:hover {
+    padding-left: 28px;
+}
+
+.track-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.track-info {
+    font-size: 8px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.track-indicators {
+    display: flex;
+    gap: 6px;
+    opacity: 0.7;
+}
+
+.pip-labeled {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.pip-label {
+    font-size: 6px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    /*opacity: 0.7;*/
+    line-height: 1;
+}
+
+.pip-label.warn {
+    color: #f59e0b;
+}
+
+.pip-row {
+    display: flex;
+    gap: 1px;
+}
+
+.mini-pip {
+    width: 2px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1px;
+}
+
+.mini-pip.active {
+    background: var(--blue);
+}
+
+.mini-pip.active.warn {
+    background: #f59e0b;
+}
+
+/* ─── Setup Targets (Ghost Layer) ────────────────────────────────────────── */
+.ghost-poly {
+    fill: rgba(255, 255, 255, 0.03);
+    stroke: rgba(255, 255, 255, 0.15);
+    stroke-width: 1;
+    stroke-dasharray: 2 2;
+    pointer-events: none;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar-target {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    z-index: 10;
+    pointer-events: none;
+    transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-1px);
+}
+
+.bar-target::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff;
+}
+
+/* ─── Sidebar Track Card ────────────────────────────────────────────────── */
+.track-card-compact {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.track-card-compact:hover {
+    border-color: rgba(14, 165, 233, 0.3);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+}
+
+.track-card-accent-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--blue);
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.track-card-compact:hover .track-card-accent-line {
+    opacity: 1;
+}
+
+.tooltip {
+    position: fixed;
+    pointer-events: none;
+}

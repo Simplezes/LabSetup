@@ -1,0 +1,70 @@
+{
+    "tyre_physics": {
+        "compound_medium": {
+            "display_name": "Dry Medium",
+            "pressure_range_kpa": [
+                136.0,
+                166.0
+            ],
+            "optimal_pressure_kpa": 152.0,
+            "optimal_temp_c": 80,
+            "pacejka_approx": {
+                "B": 13.5,
+                "C": 1.50,
+                "D": 1.95,
+                "E": -0.18
+            }
+        },
+        "compound_wet": {
+            "display_name": "Wet",
+            "pressure_range_kpa": [
+                136.0,
+                166.0
+            ],
+            "optimal_pressure_kpa": 158.0,
+            "optimal_temp_c": 55,
+            "pacejka_approx": {
+                "B": 9.8,
+                "C": 1.30,
+                "D": 1.55,
+                "E": -0.12
+            }
+        }
+    },
+    "cars": [
+        {
+            "id": "ligier_js_p325_lmp3",
+            "mass_kg": 930,
+            "weight_dist_f": 0.455,
+            "h_cg_mm": 325,
+            "wheelbase_m": 2.860,
+            "motion_ratio": {
+                "front": 1.0,
+                "rear": 1.0
+            },
+            "steering_ratio": 13.0,
+            "aero": {
+                "base_cl": -3.85,
+                "base_cd": 0.95,
+                "cop_front": 0.41
+            }
+        },
+        {
+            "id": "ginetta_g61_lmp3",
+            "mass_kg": 930,
+            "weight_dist_f": 0.470,
+            "h_cg_mm": 330,
+            "wheelbase_m": 2.855,
+            "motion_ratio": {
+                "front": 1.0,
+                "rear": 1.0
+            },
+            "steering_ratio": 13.2,
+            "aero": {
+                "base_cl": -3.75,
+                "base_cd": 0.92,
+                "cop_front": 0.395
+            }
+        }
+    ]
+}

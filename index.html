@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LeManStudio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <script src="js/tracks.js"></script>
+</head>
+
+<body class="min-h-screen lg:h-screen flex flex-col overflow-y-auto lg:overflow-hidden bg-bg text-slate-100">
+
+    <div class="max-w-[1900px] w-full mx-auto flex-1 flex flex-col p-4 lg:p-6 lg:overflow-hidden">
+
+        <header class="flex justify-between items-center mb-4 pb-4 border-b border-white/5 flex-none z-[1000]">
+            <div class="flex items-center gap-4">
+                <img src="img/logo.png" alt="LeManStudio" class="h-6 w-auto object-contain">
+                <p class="text-[8px] text-slate-500/50 font-bold uppercase tracking-widest hidden md:block pt-2">
+                    by Simplezes | Note: This tool does not fully simulate LMU physics but it is a work in progress :)
+                </p>
+            </div>
+
+            <div class="flex gap-4 items-center">
+                <div class="mode-toggle flex bg-panel-alt rounded p-0.5 border border-white border-opacity-5">
+                    <button id="modeBasic"
+                        class="px-3 py-1 rounded text-[10px] font-bold tracking-widest transition-all duration-300">BASIC</button>
+                    <button id="modeAdvanced"
+                        class="px-3 py-1 rounded text-[10px] font-bold tracking-widest transition-all duration-300">ADVANCED</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-12 gap-6 flex-1 lg:min-h-0">
+
+            <aside class="col-span-12 lg:col-span-2 flex flex-col gap-4 lg:overflow-y-auto pr-2 custom-scrollbar">
+
+                <div class="smart-section group relative collapsed">
+                    <div class="sidebar-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <div class="accent-bar !bg-white"></div>
+                        <span>MACHINE</span>
+                        <svg class="chevron-icon" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </div>
+                    <div class="section-content p-2">
+                        <button id="openGarageBtn"
+                            class="track-card-compact w-full group !border-white/10 hover:!border-white/30">
+                            <div class="track-card-accent-line !bg-white"></div>
+                            <div class="flex flex-col relative z-10">
+                                <span id="currentCar"
+                                    class="font-bold tracking-widest text-[11px] text-white uppercase italic text-left">BMW
+                                    M4 LMGT3</span>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span
+                                        class="text-[8px] text-slate-500 font-bold uppercase tracking-tighter opacity-70">CLASS</span>
+                                    <span id="currentCarClass"
+                                        class="text-[9px] text-slate-400 font-mono uppercase">LMGT3</span>
+                                </div>
+                            </div>
+
+                            <div
+                                class="absolute right-3 top-1/2 -translate-y-1/2 opacity-20 group-hover:opacity-100 transition-all duration-300">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div id="machineDropdown" class="dropdown-menu custom-scrollbar">
+                    </div>
+                </div>
+
+                <div class="smart-section group collapsed">
+                    <div class="sidebar-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <div class="accent-bar !bg-amber-500"></div>
+                        <span>AMBIENT</span>
+                        <svg class="chevron-icon" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </div>
+                    <div class="section-content p-3 space-y-4">
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[9px] font-bold text-slate-600 uppercase tracking-widest">TRACK
+                                    TEMP</span>
+                                <span id="trackTempV" class="font-mono text-[11px] text-amber-500 font-bold">25°C</span>
+                            </div>
+                            <input type="range" id="trackTemp" min="5" max="60" step="1" value="25"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer accent-amber-500">
+                            <div class="grid grid-cols-3 gap-1" id="tempPresets">
+                                <button
+                                    class="px-1 py-1 rounded-sm bg-blue-500/5 border border-blue-500/20 text-[8px] font-bold text-blue-400 hover:bg-blue-500/10 transition-colors"
+                                    data-temp="15">15°C</button>
+                                <button
+                                    class="px-1 py-1 rounded-sm bg-white/5 border border-white/10 text-[8px] font-bold text-slate-500 hover:bg-white/10 transition-colors"
+                                    data-temp="30">30°C</button>
+                                <button
+                                    class="px-1 py-1 rounded-sm bg-orange-500/5 border border-orange-500/20 text-[8px] font-bold text-orange-400 hover:bg-orange-500/10 transition-colors"
+                                    data-temp="45">45°C</button>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2 pt-2 border-t border-white/5">
+                            <span class="text-[9px] font-bold text-slate-600 uppercase tracking-widest">WEATHER</span>
+                            <div class="grid grid-cols-2 gap-1" id="weatherChips">
+                                <button
+                                    class="weather-chip px-2 py-1 rounded-sm border border-white/5 bg-panel text-[8px] font-bold text-slate-500 hover:bg-white/5 transition-all active"
+                                    data-value="clear">CLEAR</button>
+                                <button
+                                    class="weather-chip px-2 py-1 rounded-sm border border-white/5 bg-panel text-[8px] font-bold text-slate-500 hover:bg-white/5 transition-all"
+                                    data-value="cloudy">CLOUDY</button>
+                                <button
+                                    class="weather-chip px-2 py-1 rounded-sm border border-white/5 bg-panel text-[8px] font-bold text-slate-500 hover:bg-white/5 transition-all"
+                                    data-value="drizzle">DRIZZLE</button>
+                                <button
+                                    class="weather-chip px-2 py-1 rounded-sm border border-white/5 bg-panel text-[8px] font-bold text-slate-500 hover:bg-white/5 transition-all"
+                                    data-value="rain">RAIN</button>
+                                <button
+                                    class="weather-chip px-2 py-1 rounded-sm border border-white/5 bg-panel text-[8px] font-bold text-slate-500 hover:bg-white/5 transition-all col-span-2"
+                                    data-value="storm">STORM</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="smart-section group relative collapsed">
+                    <div class="sidebar-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <div class="accent-bar !bg-blue-500"></div>
+                        <span>CIRCUIT</span>
+                        <svg class="chevron-icon" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </div>
+                    <div class="section-content p-2">
+                        <button id="openTrackBtn" class="track-card-compact w-full group">
+                            <div class="track-card-accent-line"></div>
+                            <div class="flex flex-col relative z-10">
+                                <span id="currentTrack"
+                                    class="font-bold tracking-widest text-[11px] text-blue-500 uppercase italic text-left">CIRCUIT
+                                    DE LA SARTHE</span>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span
+                                        class="text-[8px] text-slate-500 font-bold uppercase tracking-tighter opacity-70">LOCATION</span>
+                                    <span
+                                        class="location-subtext text-[9px] text-slate-400 font-mono uppercase">FRANCE</span>
+                                </div>
+                            </div>
+
+                            <div
+                                class="absolute right-3 top-1/2 -translate-y-1/2 opacity-20 group-hover:opacity-100 group-hover:text-blue-500 transition-all duration-300">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div id="trackDropdown" class="dropdown-menu custom-scrollbar">
+                    </div>
+                </div>
+
+                <div class="smart-section group collapsed">
+                    <div class="sidebar-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <div class="accent-bar !bg-green-500"></div>
+                        <span>PRESETS</span>
+                        <svg class="chevron-icon" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </div>
+                    <div class="section-content">
+                        <div id="presetContainer"
+                            class="grid grid-cols-1 gap-[1px] max-h-[30vh] overflow-y-auto pr-1 custom-scrollbar px-2 pt-2">
+                        </div>
+                        <div class="flex gap-1 p-2 border-t border-white/5 mt-1">
+                            <button id="saveSetupBtn"
+                                class="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 bg-green-500/10 border border-green-500/30 text-[9px] font-bold text-green-400 hover:bg-green-500/20 hover:text-green-300 transition-all rounded-sm">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                    <polyline points="17 21 17 13 7 13 7 21" />
+                                    <polyline points="7 3 7 8 15 8" />
+                                </svg>
+                                SAVE SETUP
+                            </button>
+                            <button id="deleteSetupBtn"
+                                class="flex items-center justify-center px-2 py-1.5 bg-red-500/5 border border-red-500/20 text-[9px] font-bold text-red-500/50 hover:bg-red-500/15 hover:text-red-400 hover:border-red-500/40 transition-all rounded-sm"
+                                title="Delete saved setup">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <polyline points="3 6 5 6 21 6" />
+                                    <path d="M19 6l-1 14H6L5 6" />
+                                    <path d="M10 11v6M14 11v6" />
+                                    <path d="M9 6l1-3h4l1 3" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="smart-section group collapsed">
+                    <div class="sidebar-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <div class="accent-bar !bg-blue-500"></div>
+                        <span>FUEL CALCULATOR</span>
+                        <svg class="chevron-icon" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </div>
+                    <div class="section-content p-3 space-y-4">
+                        <div class="flex gap-1 bg-slate-900/50 p-1 rounded-sm">
+                            <button id="fuelModeTime"
+                                class="flex-1 text-[10px] font-bold py-1 rounded-sm bg-blue-500/20 text-blue-400 border border-blue-500/30 transition-all">TIME</button>
+                            <button id="fuelModeLaps"
+                                class="flex-1 text-[10px] font-bold py-1 rounded-sm text-slate-500 hover:text-slate-300 transition-all">LAPS</button>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div id="fuelTimeInputs" class="space-y-2 transition-all">
+                                <div class="flex gap-2">
+                                    <div class="flex-1">
+                                        <label
+                                            class="text-[8px] text-slate-500 uppercase font-bold block mb-1">Hours</label>
+                                        <input type="number" id="fuelHours" value="1" min="0"
+                                            class="w-full bg-slate-950 border border-white/5 rounded-sm px-2 py-1 text-[10px] focus:border-blue-500/50 transition-colors">
+                                    </div>
+                                    <div class="flex-1">
+                                        <label
+                                            class="text-[8px] text-slate-500 uppercase font-bold block mb-1">Minutes</label>
+                                        <input type="number" id="fuelMinutes" value="0" min="0" max="59"
+                                            class="w-full bg-slate-950 border border-white/5 rounded-sm px-2 py-1 text-[10px] focus:border-blue-500/50 transition-colors">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="fuelLapsInput" class="hidden transition-all">
+                                <label class="text-[8px] text-slate-500 uppercase font-bold block mb-1">Total
+                                    Laps</label>
+                                <input type="number" id="fuelTotalLaps" value="50" min="1"
+                                    class="w-full bg-slate-950 border border-white/5 rounded-sm px-2 py-1 text-[10px] focus:border-blue-500/50 transition-colors">
+                            </div>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="text-[8px] text-slate-500 uppercase font-bold block mb-1">Lap Time
+                                        (M:S.ms)</label>
+                                    <div class="flex gap-1 items-center">
+                                        <input type="number" id="fuelLapMin" value="2" min="0" placeholder="M"
+                                            class="w-12 bg-slate-950 border border-white/5 rounded-sm px-1 py-1 text-[10px] focus:border-blue-500/50 transition-colors text-center font-mono">
+                                        <span class="text-slate-600 font-bold">:</span>
+                                        <input type="number" id="fuelLapSec" value="00" min="0" max="59"
+                                            placeholder="SS"
+                                            class="w-12 bg-slate-950 border border-white/5 rounded-sm px-1 py-1 text-[10px] focus:border-blue-500/50 transition-colors text-center font-mono">
+                                        <span class="text-slate-600 font-bold">.</span>
+                                        <input type="number" id="fuelLapMs" value="000" min="0" max="999"
+                                            placeholder="ms"
+                                            class="w-16 bg-slate-950 border border-white/5 rounded-sm px-1 py-1 text-[10px] focus:border-blue-500/50 transition-colors text-center font-mono">
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <label class="text-[8px] text-slate-500 uppercase font-bold block mb-1">Fuel /
+                                        Lap</label>
+                                    <input type="number" id="fuelPerLapInput" value="3.5" min="0.1" step="0.1"
+                                        class="w-full bg-slate-950 border border-white/5 rounded-sm px-2 py-1 text-[10px] focus:border-blue-500/50 transition-colors">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900/30 border border-white/5 rounded-sm p-2 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[9px] text-slate-400 font-medium">Estimated Laps</span>
+                                <span id="fuelResultLaps" class="text-[11px] text-white font-mono font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between items-center text-blue-400">
+                                <span class="text-[9px] font-medium">Req. Fuel</span>
+                                <span id="fuelResultFuel" class="text-[11px] font-mono font-bold">0 L</span>
+                            </div>
+                            <div class="flex justify-between items-center text-amber-500 pt-1 border-t border-white/5">
+                                <span class="text-[9px] font-bold">Safety Relief</span>
+                                <span id="fuelResultSafety" class="text-[11px] font-mono font-bold">0 L</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+
+            <main
+                class="col-span-12 lg:col-span-6 flex flex-col gap-4 lg:overflow-y-auto pr-2 overflow-x-hidden custom-scrollbar">
+
+                <div
+                    class="p-4 border border-white/5 bg-panel flex flex-col items-center justify-center relative min-h-[350px] lg:min-h-[500px] flex-1">
+
+                    <div
+                        class="lg:absolute top-4 left-4 flex gap-2 z-50 w-full lg:w-auto justify-center lg:justify-start mb-4 lg:mb-0 flex-none">
+                        <button id="viewRadar"
+                            class="text-[9px] font-bold px-3 py-1 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 transition-colors">RADAR</button>
+                        <button id="viewBars"
+                            class="text-[9px] font-bold text-slate-500 px-3 py-1 rounded border border-white/5 hover:text-white hover:bg-white/5 transition-colors">BARS</button>
+                    </div>
+
+                    <div id="radarView"
+                        class="w-full flex-1 flex flex-col items-center justify-center lg:mt-12 xl:mt-0 transition-opacity duration-300 min-h-[250px]">
+                        <svg viewBox="0 0 200 200" class="w-56 h-56 md:w-80 md:h-80 overflow-visible">
+                            <polygon points="100,20 176.08,75.28 147.02,164.72 52.98,164.72 23.92,75.28" fill="none"
+                                stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
+                            <polygon points="100,60 138.04,87.64 123.51,132.36 76.49,132.36 61.96,87.64" fill="none"
+                                stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
+                            <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.05)"
+                                stroke-width="0.5" />
+                            <line x1="100" y1="100" x2="176.08" y2="75.28" stroke="rgba(255,255,255,0.05)"
+                                stroke-width="0.5" />
+                            <line x1="100" y1="100" x2="147.02" y2="164.72" stroke="rgba(255,255,255,0.05)"
+                                stroke-width="0.5" />
+                            <line x1="100" y1="100" x2="52.98" y2="164.72" stroke="rgba(255,255,255,0.05)"
+                                stroke-width="0.5" />
+                            <line x1="100" y1="100" x2="23.92" y2="75.28" stroke="rgba(255,255,255,0.05)"
+                                stroke-width="0.5" />
+                            <polygon id="ghostPoly" points="" class="ghost-poly" fill="rgba(255,255,255,0.02)" />
+                            <polygon id="spiderPoly" points="" class="spider-poly" fill="rgba(14, 165, 233, 0.1)"
+                                stroke="var(--blue)" stroke-width="1.5" />
+                            <text x="100" y="8" text-anchor="middle"
+                                class="fill-slate-500 font-bold uppercase tracking-widest cursor-help hover:fill-blue-500 transition-colors"
+                                font-size="8">Downforce</text>
+                            <text x="195" y="70" text-anchor="start"
+                                class="fill-slate-500 font-bold uppercase tracking-widest cursor-help hover:fill-blue-500 transition-colors"
+                                font-size="8">Grip</text>
+                            <text x="165" y="178" text-anchor="start"
+                                class="fill-slate-500 font-bold uppercase tracking-widest cursor-help hover:fill-blue-500 transition-colors"
+                                font-size="8">Turn-in</text>
+                            <text x="35" y="178" text-anchor="end"
+                                class="fill-slate-500 font-bold uppercase tracking-widest cursor-help hover:fill-blue-500 transition-colors"
+                                font-size="8">Bumps</text>
+                            <text x="5" y="70" text-anchor="end"
+                                class="fill-slate-500 font-bold uppercase tracking-widest cursor-help hover:fill-blue-500 transition-colors"
+                                font-size="8">Top Speed</text>
+                        </svg>
+                    </div>
+
+                    <div id="barsView"
+                        class="hidden w-full flex-1 flex-col justify-center px-8 sm:px-16 md:px-24 pt-10 pb-4 gap-3 sm:gap-5 transition-opacity duration-300">
+                        <div class="space-y-1 w-full">
+                            <div class="flex justify-between items-end"><span
+                                    class="text-[9px] text-slate-500 font-bold uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                    title="Downforce: Aerodynamic load generated by wings and bodywork. Essential for high-speed stability.">Downforce</span><span
+                                    id="barValDf" class="text-[10px] text-blue-500 font-mono">0%</span>
+                            </div>
+                            <div class="h-1 w-full bg-slate-900 rounded-none overflow-hidden relative">
+                                <div id="barActiveDf"
+                                    class="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"
+                                    style="width:0%"></div>
+                                <div id="barTargetDf" class="bar-target"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1 w-full">
+                            <div class="flex justify-between items-end"><span
+                                    class="text-[9px] text-slate-500 font-bold uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                    title="Grip: Overall traction potential from tires and aero. Affects cornering and braking.">Grip</span><span
+                                    id="barValGr" class="text-[10px] text-blue-500 font-mono">0%</span>
+                            </div>
+                            <div class="h-1 w-full bg-slate-900 rounded-none overflow-hidden relative">
+                                <div id="barActiveGr"
+                                    class="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"
+                                    style="width:0%"></div>
+                                <div id="barTargetGr" class="bar-target"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1 w-full">
+                            <div class="flex justify-between items-end"><span
+                                    class="text-[9px] text-slate-500 font-bold uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                    title="Turn-in: Initial steering response. Higher values mean quicker direction changes.">Turn-in</span><span
+                                    id="barValTu" class="text-[10px] text-blue-500 font-mono">0%</span>
+                            </div>
+                            <div class="h-1 w-full bg-slate-900 rounded-none overflow-hidden relative">
+                                <div id="barActiveTu"
+                                    class="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"
+                                    style="width:0%"></div>
+                                <div id="barTargetTu" class="bar-target"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1 w-full">
+                            <div class="flex justify-between items-end"><span
+                                    class="text-[9px] text-slate-500 font-bold uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                    title="Bumps: Suspension absorption rating. Better absorption improves lap consistency on rough tracks.">Bumps</span><span
+                                    id="barValBu" class="text-[10px] text-blue-500 font-mono">0%</span>
+                            </div>
+                            <div class="h-1 w-full bg-slate-900 rounded-none overflow-hidden relative">
+                                <div id="barActiveBu"
+                                    class="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"
+                                    style="width:0%"></div>
+                                <div id="barTargetBu" class="bar-target"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1 w-full">
+                            <div class="flex justify-between items-end"><span
+                                    class="text-[9px] text-slate-500 font-bold uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                    title="Top Speed: Theoretical maximum velocity on long straights.">Top
+                                    Speed</span><span id="barValTs"
+                                    class="text-[10px] text-blue-500 font-mono">0%</span></div>
+                            <div class="h-1 w-full bg-slate-900 rounded-none overflow-hidden relative">
+                                <div id="barActiveTs"
+                                    class="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"
+                                    style="width:0%"></div>
+                                <div id="barTargetTs" class="bar-target"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="lg:absolute top-4 right-6 flex justify-center w-full lg:w-auto gap-4 lg:gap-3 z-40 mt-6 lg:mt-0 flex-none">
+                        <div class="w-24 p-2 flex flex-col items-center">
+                            <p class="text-[8px] text-slate-600 font-bold mb-2 uppercase tracking-widest">Tyre Thermal
+                            </p>
+                            <div class="grid grid-cols-2 gap-1 w-full" style="height:60px">
+                                <div id="tyreFL" class="flex border border-white/5 overflow-hidden rounded-sm"
+                                    title="Front Left: Inside | Center | Outside">
+                                    <div id="heatFL_I"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] border-r border-white/5 relative">
+                                    </div>
+                                    <div id="heatFL_C"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] border-r border-white/5 relative">
+                                    </div>
+                                    <div id="heatFL_O"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] relative">
+                                    </div>
+                                </div>
+                                <div id="tyreFR" class="flex border border-white/5 overflow-hidden rounded-sm"
+                                    title="Front Right: Outside | Center | Inside">
+                                    <div id="heatFR_O"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] border-r border-white/5 relative">
+                                    </div>
+                                    <div id="heatFR_C"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] border-r border-white/5 relative">
+                                    </div>
+                                    <div id="heatFR_I"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] relative">
+                                    </div>
+                                </div>
+                                <div id="tyreRL" class="flex border border-white/5 overflow-hidden rounded-sm"
+                                    title="Rear Left: Inside | Center | Outside">
+                                    <div id="heatRL_I"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] border-r border-white/5 relative">
+                                    </div>
+                                    <div id="heatRL_C"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] border-r border-white/5 relative">
+                                    </div>
+                                    <div id="heatRL_O"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] relative">
+                                    </div>
+                                </div>
+                                <div id="tyreRR" class="flex border border-white/5 overflow-hidden rounded-sm"
+                                    title="Rear Right: Outside | Center | Inside">
+                                    <div id="heatRR_O"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] border-r border-white/5 relative">
+                                    </div>
+                                    <div id="heatRR_C"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] border-r border-white/5 relative">
+                                    </div>
+                                    <div id="heatRR_I"
+                                        class="flex-1 transition-colors duration-500 min-h-[40px] relative">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full mt-2">
+                                <div class="h-1 w-full rounded-full overflow-hidden"
+                                    style="background: linear-gradient(to right, #3b82f6, #22c55e, #f59e0b, #ef4444)">
+                                </div>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-[7px] font-bold text-slate-600 uppercase">COLD</span>
+                                    <span class="text-[7px] font-bold text-slate-500 uppercase">IDEAL</span>
+                                    <span class="text-[7px] font-bold text-slate-600 uppercase">HOT</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-24 p-2 flex flex-col items-center">
+                            <p class="text-[8px] text-slate-600 font-bold mb-2 uppercase tracking-widest">Damper Grid
+                            </p>
+                            <div class="grid grid-cols-2 gap-1 w-full" style="height:60px">
+                                <div id="dampFL" class="damper-cell border border-white/5" title="Front Left Damping">
+                                </div>
+                                <div id="dampFR" class="damper-cell border border-white/5" title="Front Right Damping">
+                                </div>
+                                <div id="dampRL" class="damper-cell border border-white/5" title="Rear Left Damping">
+                                </div>
+                                <div id="dampRR" class="damper-cell border border-white/5" title="Rear Right Damping">
+                                </div>
+                            </div>
+                            <div class="w-full mt-2">
+                                <div class="h-1 w-full rounded-full overflow-hidden"
+                                    style="background: linear-gradient(to right, #1e3a5f, #0ea5e9, #eab308)">
+                                </div>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-[7px] font-bold text-slate-600 uppercase">SOFT</span>
+                                    <span class="text-[7px] font-bold text-slate-500 uppercase">IDEAL</span>
+                                    <span class="text-[7px] font-bold text-slate-600 uppercase">STIFF</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:absolute bottom-6 w-full px-4 lg:px-12 mt-8 lg:mt-0 pb-2 lg:pb-0 flex-none">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[9px] font-bold text-slate-600 uppercase tracking-widest">FRONT <span
+                                    id="fP" class="text-blue-500">50%</span></span>
+                            <span class="text-[9px] font-bold text-slate-700 uppercase tracking-widest">Aero Rake /
+                                CoP</span>
+                            <span class="text-[9px] font-bold text-slate-600 uppercase tracking-widest">REAR <span
+                                    id="rP" class="text-blue-500">50%</span></span>
+                        </div>
+                        <div class="h-1 w-full bg-slate-900 relative">
+                            <div id="cop" class="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-full bg-blue-500"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+            <aside
+                class="col-span-12 lg:col-span-4 flex flex-col gap-4 lg:overflow-y-auto pr-2 custom-scrollbar relative">
+
+                <div
+                    class="sticky top-0 z-[100] bg-bg/95 backdrop-blur-md pb-3 pt-3 lg:pt-0 -mx-4 px-4 lg:mx-0 lg:px-0 flex flex-col gap-3 border-b border-white/5 flex-none mb-2">
+                    <div class="flex gap-1 pt-1 flex-wrap">
+                        <button
+                            class="setup-tab-btn active px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-white/5 bg-panel hover:bg-white/5 transition-all"
+                            data-target="tab-overview">OVERVIEW</button>
+                        <button
+                            class="setup-tab-btn px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-transparent text-slate-500 hover:text-white transition-all"
+                            data-target="tab-wheels">WHEELS</button>
+                        <button
+                            class="setup-tab-btn px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-transparent text-slate-500 hover:text-white transition-all"
+                            data-target="tab-suspension">SUSPENSION</button>
+                        <button
+                            class="setup-tab-btn px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-transparent text-slate-500 hover:text-white transition-all setting-advanced"
+                            data-target="tab-dampers">DAMPERS</button>
+                        <button
+                            class="setup-tab-btn px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-transparent text-slate-500 hover:text-white transition-all"
+                            data-target="tab-aero">AERO</button>
+                    </div>
+
+                    <div class="px-3 py-2 border border-white/5 bg-panel relative overflow-hidden group">
+                        <div class="relative z-10 flex justify-between items-center">
+                            <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest m-0 leading-none">
+                                Steering Balance
+                            </h3>
+                            <div>
+                                <span id="steerStatus"
+                                    class="text-[9px] text-green-500 font-bold border border-green-500/30 px-2 py-0.5 leading-none">BALANCED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-overview" class="setup-tab-content flex flex-col gap-2">
+                    <div class="p-3 border border-white/5 bg-panel flex-1">
+                        <h3 class="text-[9px] font-bold mb-3 text-slate-500 uppercase tracking-widest">Fix Protocol</h3>
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-center py-1 border-b border-white/5">
+                                <span class="text-[11px] text-slate-400">Understeer</span>
+                                <span class="text-blue-500 font-bold text-[10px] uppercase font-mono">-Wing /
+                                    -F.Height</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-white/5">
+                                <span class="text-[11px] text-slate-400">Oversteer</span>
+                                <span class="text-blue-500 font-bold text-[10px] uppercase font-mono">+Wing /
+                                    +R.Height</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-white/5">
+                                <span class="text-[11px] text-slate-400">Bumpy / Unstable</span>
+                                <span class="text-blue-500 font-bold text-[10px] uppercase font-mono">-Packers /
+                                    -Springs</span>
+                            </div>
+                            <div class="f-row flex justify-between items-center py-1">
+                                <span class="text-[11px] text-slate-400">Brake Lockup</span>
+                                <span class="text-green-500 font-bold text-[10px] uppercase font-mono">F. Bias
+                                    (+)</span>
+                            </div>
+                        </div>
+                        <div id="trackAdvice"
+                            class="mt-4 pt-3 border-t border-white/5 text-[9px] text-slate-500 italic leading-snug">
+                            Select a track to see specific setup suggestions.
+                        </div>
+                    </div>
+                    <div class="p-2 border border-white/5 bg-panel flex justify-between items-center">
+                        <h3 class="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] m-0">Recommended Bias
+                        </h3>
+                        <div class="flex gap-3 items-center">
+                            <span id="recoBias" class="text-blue-500 font-black text-[13px] font-mono">51.5:48.5</span>
+                            <button id="sync"
+                                class="px-3 py-1 bg-blue-500 text-black text-[9px] font-black uppercase rounded-sm hover:bg-blue-400 transition-colors">SYNC</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-wheels" class="setup-tab-content p-3 border border-white/5 bg-panel space-y-4 hidden">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Wheels & Brakes</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-[9px] font-bold text-slate-600 uppercase tracking-widest">Compound</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button
+                                    class="comp-btn px-3 py-1.5 text-[10px] font-bold border border-white/5 hover:bg-white/5 transition-all"
+                                    data-type="WET">WET</button>
+                                <button
+                                    class="comp-btn active px-3 py-1.5 text-[10px] font-bold border border-blue-500/30 bg-blue-500/10 text-blue-400"
+                                    data-type="MEDIUM">MEDIUM</button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 relative p-2 border border-white/5 rounded-sm bg-panel-alt">
+                            <div class="space-y-1 relative">
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="tp_fC_label">Front Pressure</span>
+                                    <span id="tp_fV" class="text-[10px] text-blue-500 font-mono">136kPa</span>
+                                </div>
+                                <input type="range" id="tpressure_f" min="136" max="210" step="1" value="136"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer tire-slider">
+                            </div>
+
+                            <div
+                                class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center pointer-events-none w-full">
+                                <div class="h-px bg-white/10 w-full absolute top-1/2 -translate-y-1/2"></div>
+                                <button id="linkTiresBtn"
+                                    class="pointer-events-auto w-6 h-6 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center hover:bg-slate-700 hover:border-blue-400 transition-all active shadow-lg z-20"
+                                    title="Link Pressures">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="text-blue-400 transition-colors link-icon">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="text-slate-500 transition-colors hidden unlink-icon">
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="space-y-1 relative">
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="tp_rC_label">Rear Pressure</span>
+                                    <span id="tp_rV" class="text-[10px] text-blue-500 font-mono">136kPa</span>
+                                </div>
+                                <input type="range" id="tpressure_r" min="136" max="210" step="1" value="136"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer tire-slider">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1 relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="fcC_label">Front Camber</span>
+                                <span id="fcV" class="text-[10px] text-blue-500 font-mono">-2.30°</span>
+                            </div>
+                            <input type="range" id="fcam" min="-5.00" max="-1.00" step="0.10" value="-2.30"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+
+                        <div class="space-y-1 relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="rcC_label">Rear Camber</span>
+                                <span id="rcV" class="text-[10px] text-blue-500 font-mono">-1.50°</span>
+                            </div>
+                            <input type="range" id="rcam" min="-4.00" max="0.00" step="0.10" value="-1.50"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+
+                        <div class="space-y-1 setting-advanced relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="fbdC_label">Front Brake Duct</span>
+                                <span id="fbdV" class="text-[10px] text-blue-500 font-mono uppercase">Open</span>
+                            </div>
+                            <input type="range" id="fbd" min="0" max="10" step="1" value="0"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+
+                        <div class="space-y-1 setting-advanced relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="rbdC_label">Rear Brake Duct</span>
+                                <span id="rbdV" class="text-[10px] text-blue-500 font-mono uppercase">Open</span>
+                            </div>
+                            <input type="range" id="rbd" min="0" max="10" step="1" value="0"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+
+                        <div class="space-y-1 relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="bC_label">Brake Bias</span>
+                                <span id="bV" class="text-[10px] text-blue-500 font-mono">51.5%</span>
+                            </div>
+                            <input type="range" id="bias" min="43.0" max="57.0" step="0.1" value="51.5"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-suspension" class="setup-tab-content p-3 border border-white/5 bg-panel space-y-4 hidden">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Suspension</h3>
+
+                    <div class="space-y-4">
+                        <div class="axle-header pb-1 border-b border-white/5">
+                            <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">FRONT
+                                AXLE</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="space-y-1 setting-advanced relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="fsC_label">Springs</span>
+                                    <span id="fsV" class="text-[10px] text-blue-500 font-mono">2</span>
+                                </div>
+                                <input type="range" id="fs" min="1" max="6" step="1" value="2"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 setting-advanced tender-setting hidden">
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="tender_fC_label">Tender Spring</span>
+                                    <span id="tender_fV" class="text-[10px] text-blue-500 font-mono">Standard</span>
+                                </div>
+                                <input type="range" id="tender_f" min="0" max="1" step="1" value="1"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 setting-advanced relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="fpkC_label">Packers</span>
+                                    <span id="fpkV" class="text-[10px] text-blue-500 font-mono">0.0cm</span>
+                                </div>
+                                <input type="range" id="fpk" min="0.0" max="4.0" step="0.1" value="0.0"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 setting-advanced relative third-spring-setting hidden">
+
+                                <div class="flex justify-between items-end">
+                                    <span
+                                        class="text-[9px] font-bold text-slate-500 uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                        id="third_FspringC_label">3rd Spring</span>
+                                    <span id="third_FspringV" class="text-[10px] text-blue-500 font-mono">N/A</span>
+                                </div>
+                                <input type="range" id="third_Fspring" min="0" max="4" step="1" value="0"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 setting-advanced relative third-spring-setting hidden">
+
+                                <div class="flex justify-between items-end">
+                                    <span
+                                        class="text-[9px] font-bold text-slate-500 uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                        title="Third Packers: Adjusts the limited travel of the third spring."
+                                        id="third_fpkC_label">3rd Packers</span>
+                                    <span id="third_fpkV" class="text-[10px] text-blue-500 font-mono">0.0cm</span>
+                                </div>
+                                <input type="range" id="third_fpk" min="0.0" max="2.0" step="0.1" value="0.0"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="fhC_label">Ride Height</span>
+                                    <span id="fhV" class="text-[10px] text-blue-500 font-mono">5.3cm</span>
+                                </div>
+                                <input type="range" id="fh" min="5.0" max="9.0" step="0.1" value="5.3"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="axle-header mt-2 pb-1 border-b border-white/5">
+                            <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">REAR AXLE</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="space-y-1 setting-advanced relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="rsC_label">Springs</span>
+                                    <span id="rsV" class="text-[10px] text-blue-500 font-mono">2</span>
+                                </div>
+                                <input type="range" id="rs" min="1" max="6" step="1" value="2"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 setting-advanced relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="rpkC_label">Packers</span>
+                                    <span id="rpkV" class="text-[10px] text-blue-500 font-mono">0.0cm</span>
+                                </div>
+                                <input type="range" id="rpk" min="0.0" max="4.0" step="0.1" value="0.0"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 setting-advanced relative third-spring-setting hidden">
+
+                                <div class="flex justify-between items-end">
+                                    <span
+                                        class="text-[9px] font-bold text-slate-500 uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                        id="third_RspringC_label">3rd Spring</span>
+                                    <span id="third_RspringV" class="text-[10px] text-blue-500 font-mono">N/A</span>
+                                </div>
+                                <input type="range" id="third_Rspring" min="0" max="0" step="1" value="0"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 setting-advanced relative third-spring-setting hidden">
+
+                                <div class="flex justify-between items-end">
+                                    <span
+                                        class="text-[9px] font-bold text-slate-500 uppercase tracking-widest cursor-help hover:text-white transition-colors"
+                                        title="Third Packers: Adjusts the limited travel of the third spring."
+                                        id="third_rpkC_label">3rd Packers</span>
+                                    <span id="third_rpkV" class="text-[10px] text-blue-500 font-mono">1.0cm</span>
+                                </div>
+                                <input type="range" id="third_rpk" min="0.0" max="1.0" step="0.1" value="1.0"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="rhC_label">Ride Height</span>
+                                    <span id="rhV" class="text-[10px] text-blue-500 font-mono">6.5cm</span>
+                                </div>
+                                <input type="range" id="rh" min="5.0" max="10.0" step="0.1" value="6.5"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="bg-slate-900/50 p-3 border border-white/5 mt-1">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">ACTUAL
+                                        RAKE</span>
+                                    <span id="rakeV" class="text-[13px] text-blue-500 font-mono font-bold">+1.4cm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-dampers"
+                    class="setup-tab-content p-3 border border-white/5 bg-panel space-y-4 setting-advanced hidden">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Dampers (Bump/Reb)
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                        <div class="col-span-2 axle-header pb-1 border-b border-white/5">
+                            <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">FRONT
+                                AXLE</span>
+                        </div>
+                        <div class="space-y-1 relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="fsbC_label">Slow Bump</span>
+                                <span id="fsbV" class="text-[10px] text-blue-500 font-mono">3</span>
+                            </div>
+                            <input type="range" id="fsb" min="0" max="18" step="1" value="3"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                        <div class="space-y-1 relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="fsrC_label">Slow Reb</span>
+                                <span id="fsrV" class="text-[10px] text-blue-500 font-mono">5</span>
+                            </div>
+                            <input type="range" id="fsr" min="0" max="18" step="1" value="5"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                        <div class="space-y-1 setting-advanced relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="ffbC_label">Fast Bump</span>
+                                <span id="ffbV" class="text-[10px] text-blue-500 font-mono">4</span>
+                            </div>
+                            <input type="range" id="ffb" min="0" max="18" step="1" value="4"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                        <div class="space-y-1 setting-advanced relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="ffrC_label">Fast Reb</span>
+                                <span id="ffrV" class="text-[10px] text-blue-500 font-mono">5</span>
+                            </div>
+                            <input type="range" id="ffr" min="0" max="18" step="1" value="5"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+
+                        <div class="col-span-2 axle-header mt-1 pb-1 border-b border-white/5">
+                            <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">REAR AXLE</span>
+                        </div>
+                        <div class="space-y-1 relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="rsbC_label">Slow Bump</span>
+                                <span id="rsbV" class="text-[10px] text-blue-500 font-mono">5</span>
+                            </div>
+                            <input type="range" id="rsb" min="0" max="18" step="1" value="5"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                        <div class="space-y-1 relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="rsrC_label">Slow Reb</span>
+                                <span id="rsrV" class="text-[10px] text-blue-500 font-mono">3</span>
+                            </div>
+                            <input type="range" id="rsr" min="0" max="18" step="1" value="3"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                        <div class="space-y-1 setting-advanced relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="rfbC_label">Fast Bump</span>
+                                <span id="rfbV" class="text-[10px] text-blue-500 font-mono">5</span>
+                            </div>
+                            <input type="range" id="rfb" min="0" max="18" step="1" value="5"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                        <div class="space-y-1 setting-advanced relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="rfrC_label">Fast Reb</span>
+                                <span id="rfrV" class="text-[10px] text-blue-500 font-mono">3</span>
+                            </div>
+                            <input type="range" id="rfr" min="0" max="18" step="1" value="3"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-aero" class="setup-tab-content p-3 border border-white/5 bg-panel space-y-4 hidden">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Chassis & Aero</h3>
+
+                    <div class="space-y-4">
+                        <div class="axle-header pb-1 border-b border-white/5">
+                            <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">FRONT
+                                AXLE</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 setting-advanced">
+                            <div class="space-y-1 relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="ftoeC_label">Toe</span>
+                                    <span id="ftoeV" class="text-[10px] text-blue-500 font-mono">-0.117°</span>
+                                </div>
+                                <input type="range" id="ftoe" min="-0.936" max="0.936" step="0.117" value="-0.117"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="farbC_label">ARB</span>
+                                    <span id="farbV" class="text-[10px] text-blue-500 font-mono">P4</span>
+                                </div>
+                                <input type="range" id="farb" min="0" max="10" step="1" value="4"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="axle-header mt-2 pb-1 border-b border-white/5">
+                            <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">REAR AXLE</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 setting-advanced">
+                            <div class="space-y-1 relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="rtoeC_label">Toe</span>
+                                    <span id="rtoeV" class="text-[10px] text-blue-500 font-mono">0.234°</span>
+                                </div>
+                                <input type="range" id="rtoe" min="-0.936" max="0.936" step="0.117" value="0.234"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                            <div class="space-y-1 relative">
+
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                        id="rarbC_label">ARB</span>
+                                    <span id="rarbV" class="text-[10px] text-blue-500 font-mono">P1</span>
+                                </div>
+                                <input type="range" id="rarb" min="0" max="10" step="1" value="1"
+                                    class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1 mt-2 relative">
+
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest"
+                                    id="wingC_label">Rear Wing</span>
+                                <span id="wingV" class="text-[10px] text-blue-500 font-mono">3.3°</span>
+                            </div>
+                            <input type="range" id="wing" min="-2.7" max="4.5" step="0.6" value="3.3"
+                                class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+
+    <div id="garageOverlay" class="fixed inset-0 z-[2000] hidden bg-slate-950/90 backdrop-blur-md overflow-y-auto">
+
+        <div class="min-h-full flex flex-col">
+
+            <div class="sticky top-0 z-10 garage-header-bg border-b border-white/5 px-8 py-4">
+                <div class="max-w-6xl mx-auto flex justify-between items-center gap-6">
+                    <div class="flex items-center gap-5">
+                        <div>
+                            <div class="flex items-baseline gap-3">
+                                <h2 class="text-2xl font-black uppercase tracking-tighter leading-none">THE <span
+                                        class="text-blue-500">GARAGE</span></h2>
+                                <span
+                                    class="text-[9px] font-bold text-slate-600 uppercase tracking-[0.2em] hidden sm:block">Select
+                                    your machine</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button id="closeGarageBtn"
+                            class="garage-close-btn flex items-center gap-2 px-5 py-2 border border-white/10 text-slate-400 hover:text-white hover:border-white/20 transition-all text-[9px] font-bold uppercase tracking-widest">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 px-8 py-8">
+                <div class="max-w-6xl mx-auto space-y-10">
+
+                    <section>
+                        <div class="garage-category-header flex items-center gap-4 mb-5">
+                            <div class="garage-category-pill lmgt3-pill">
+                                <span class="text-[8px] font-black tracking-[0.2em] uppercase">LMGT3</span>
+                            </div>
+                            <div class="flex-1 h-px bg-gradient-to-r from-white/8 to-transparent"></div>
+                            <span class="text-[8px] font-bold text-slate-700 uppercase tracking-widest">8 Cars</span>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+
+                            <button
+                                class="garage-card brand-bmw text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer active"
+                                data-value="bmw_m4_lmgt3">
+                                <div class="garage-card-accent brand-accent-bmw"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">BMW</span>
+                                        <span class="category-badge">LMGT3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        M4 LMGT3</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">Germany</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                            <button
+                                class="garage-card brand-corvette text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="corvette_z06_r">
+                                <div class="garage-card-accent brand-accent-corvette"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Chevrolet</span>
+                                        <span class="category-badge">LMGT3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        Z06 LMGT3.R</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">USA</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                            <button
+                                class="garage-card brand-ferrari text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="ferrari_296_lmgt3">
+                                <div class="garage-card-accent brand-accent-ferrari"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Ferrari</span>
+                                        <span class="category-badge">LMGT3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        296 LMGT3</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">Italy</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                            <button
+                                class="garage-card brand-ford text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="ford_mustang_lmgt3">
+                                <div class="garage-card-accent brand-accent-ford"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Ford</span>
+                                        <span class="category-badge">LMGT3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        Mustang LMGT3</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">USA</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                            <button
+                                class="garage-card brand-lexus text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="lexus_rcf_lmgt3">
+                                <div class="garage-card-accent brand-accent-lexus"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Lexus</span>
+                                        <span class="category-badge">LMGT3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        RCF LMGT3</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">Japan</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                            <button
+                                class="garage-card brand-mclaren text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="mclaren_720s_lmgt3_evo">
+                                <div class="garage-card-accent brand-accent-mclaren"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">McLaren</span>
+                                        <span class="category-badge">LMGT3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        720S EVO</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">UK</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                            <button
+                                class="garage-card brand-mercedes text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="mercedes_amg_lmgt3">
+                                <div class="garage-card-accent brand-accent-mercedes"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Mercedes-AMG</span>
+                                        <span class="category-badge">LMGT3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        AMG GT3 EVO</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">Germany</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                            <button
+                                class="garage-card brand-lamborghini text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="lamborghini_huracan_lmgt3_evo2">
+                                <div class="garage-card-accent brand-accent-lamborghini"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Lamborghini</span>
+                                        <span class="category-badge">LMGT3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        Huracan EVO2</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">Italy</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="garage-category-header flex items-center gap-4 mb-5">
+                            <div class="garage-category-pill lmp2-pill">
+                                <span class="text-[8px] font-black tracking-[0.2em] uppercase">LMP2</span>
+                            </div>
+                            <div class="flex-1 h-px bg-gradient-to-r from-white/8 to-transparent"></div>
+                            <span class="text-[8px] font-bold text-slate-700 uppercase tracking-widest">1 Car</span>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+
+                            <button
+                                class="garage-card brand-oreca text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="oreca_07_gibson_lmp2">
+                                <div class="garage-card-accent brand-accent-oreca"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Oreca</span>
+                                        <span class="category-badge lmp2-badge">LMP2</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        07 Gibson</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">France</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                        </div>
+                    </section>
+
+                    <section class="pb-8">
+                        <div class="garage-category-header flex items-center gap-4 mb-5">
+                            <div class="garage-category-pill lmp3-pill">
+                                <span class="text-[8px] font-black tracking-[0.2em] uppercase">LMP3</span>
+                            </div>
+                            <div class="flex-1 h-px bg-gradient-to-r from-white/8 to-transparent"></div>
+                            <span class="text-[8px] font-bold text-slate-700 uppercase tracking-widest">2 Cars</span>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+
+                            <button
+                                class="garage-card brand-ligier text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="ligier_js_p325_lmp3">
+                                <div class="garage-card-accent brand-accent-ligier"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Ligier</span>
+                                        <span class="category-badge lmp3-badge">LMP3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        JS P320</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span
+                                        class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">France</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                            <button
+                                class="garage-card brand-ginetta text-left group relative overflow-hidden p-0 border border-white/5 bg-panel cursor-pointer"
+                                data-value="ginetta_g61_lmp3">
+                                <div class="garage-card-accent brand-accent-ginetta"></div>
+                                <div class="relative p-4 pb-3">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="manufacturer-label text-[8px] font-bold tracking-[0.15em] text-slate-500 uppercase">Ginetta</span>
+                                        <span class="category-badge lmp3-badge">LMP3</span>
+                                    </div>
+                                    <h3
+                                        class="font-black text-[13px] tracking-widest text-white uppercase leading-tight group-hover:text-current transition-colors">
+                                        G61-LT-P3</h3>
+                                </div>
+                                <div class="garage-card-footer">
+                                    <span class="text-[8px] text-slate-600 font-bold uppercase tracking-wider">UK</span>
+                                    <span class="garage-select-label">Select →</span>
+                                </div>
+                            </button>
+
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/cars/lmgt3/bmw_m4_lmgt3.js"></script>
+    <script src="js/cars/lmgt3/chevrolet_corvette_Z06_r.js"></script>
+    <script src="js/cars/lmgt3/ferrari_296_lmgt3.js"></script>
+    <script src="js/cars/lmgt3/ford_mustang_lmgt3.js"></script>
+    <script src="js/cars/lmgt3/lexus_rcf_lmgt3.js"></script>
+    <script src="js/cars/lmgt3/mclaren_720s_lmgt3_evo.js"></script>
+    <script src="js/cars/lmgt3/mercedes_amg_lmgt3.js"></script>
+    <script src="js/cars/lmgt3/lamborghini_huracan_lmgt3_evo2.js"></script>
+    <script src="js/cars/lmp2/oreca_07_lmp2.js"></script>
+    <script src="js/cars/lmp3/ligier_js_p325_lmp3.js"></script>
+    <script src="js/cars/lmp3/ginetta_g61_lmp3.js"></script>
+    <div id="setup-tooltip"
+        class="fixed hidden z-[9999] pointer-events-none w-64 p-3 bg-panel-alt border border-white/10 rounded shadow-2xl backdrop-blur-md transition-opacity duration-200 opacity-0">
+        <div class="flex flex-col gap-2">
+            <h4 id="tooltip-title"
+                class="text-[10px] font-black text-blue-500 uppercase tracking-widest border-b border-white/5 pb-1">
+                SETTING</h4>
+            <p id="tooltip-desc" class="text-[11px] text-slate-300 leading-relaxed"></p>
+            <div class="grid grid-cols-1 gap-1 pt-1 border-t border-white/5">
+                <div class="flex items-start gap-2">
+                    <span class="text-[10px] font-black text-green-500 mt-0.5">▲</span>
+                    <p id="tooltip-inc" class="text-[10px] text-slate-400 italic"></p>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-[10px] font-black text-red-500 mt-0.5">▼</span>
+                    <p id="tooltip-dec" class="text-[10px] text-slate-400 italic"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
