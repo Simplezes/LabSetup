@@ -934,7 +934,6 @@ function update() {
     const finalStab = clamp(50
         + copShift * 0.85
         + lltd * 0.40
-        + nBias * 22
         + nRToe * 22
         + nFToe * 8
         + sRSlow * 13
@@ -967,7 +966,6 @@ function update() {
         - lltd * 0.42
         + nFToe * (-25)
         + nRToe * (-12)
-        + nBias * (-12)
         + nRake * 6
         + sFSlow * 9
         + sRFast * 5
@@ -1589,15 +1587,15 @@ const TOOLTIP_DATA = {
     },
     'bias': {
         title: 'Brake Bias',
-        desc: 'The distribution of braking force between the front and rear axles.',
-        inc: 'Shifting bias forward (+) increases stability under braking but promotes entry understeer.',
-        dec: 'Shifting bias rearward (-) helps the car rotate into corners but makes the rear unstable under heavy braking.'
+        desc: 'The distribution of braking force between the front and rear axles, heavily influencing stability and turn-in.',
+        inc: 'Shifting bias forward (+) provides stable, predictable braking in straights but causes severe understeer (plow) into corners as the front tires lock up early.',
+        dec: 'Shifting bias rearward (-) makes the car agile and easy to rotate into corners but becomes unstable and squirrelly, with high risk of rear-end oversteer and spin (especially when trail braking).'
     },
     'b': {
         title: 'Brake Bias',
-        desc: 'The distribution of braking force between the front and rear axles.',
-        inc: 'Shifting bias forward (+) increases stability under braking but promotes entry understeer.',
-        dec: 'Shifting bias rearward (-) helps the car rotate into corners but makes the rear unstable under heavy braking.'
+        desc: 'The distribution of braking force between the front and rear axles, heavily influencing stability and turn-in.',
+        inc: 'Shifting bias forward (+) provides stable, predictable braking in straights but causes severe understeer (plow) into corners as the front tires lock up early.',
+        dec: 'Shifting bias rearward (-) makes the car agile and easy to rotate into corners but becomes unstable and squirrelly, with high risk of rear-end oversteer and spin (especially when trail braking).'
     },
     'fs': {
         title: 'Front Springs',
@@ -1834,15 +1832,25 @@ document.querySelectorAll('[id$="C_label"]').forEach(labelEl => {
     });
 });
 
-// Keep hover tooltips on range sliders (desktop only)
-document.querySelectorAll('input[type="range"]').forEach(el => {
-    const id = el.id;
-    el.addEventListener('mouseenter', e => { if (!tooltipPinned) showTooltip(id, e); });
-    el.addEventListener('mousemove',  e => { if (!tooltipPinned) updateTooltipPos(e); });
-    el.addEventListener('mouseleave',  () => { if (!tooltipPinned) hideTooltip(); });
+document.querySelectorAll('.info-icon-btn').forEach(btn => {
+    const id = btn.getAttribute('data-tooltip-id');
+    btn.addEventListener('mouseenter', e => {
+        if (!tooltipPinned) {
+            showTooltip(id, e);
+        }
+    });
+    btn.addEventListener('mousemove', e => {
+        if (!tooltipPinned) {
+            updateTooltipPos(e);
+        }
+    });
+    btn.addEventListener('mouseleave', () => {
+        if (!tooltipPinned) {
+            hideTooltip();
+        }
+    });
 });
 
-// Dismiss pinned tooltip when clicking anywhere outside an info button
 document.addEventListener('click', () => {
     if (tooltipPinned) {
         tooltipPinned = false;
