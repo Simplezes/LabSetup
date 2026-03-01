@@ -1744,12 +1744,16 @@ function showTooltip(id, e) {
 function hideTooltip() {
     clearTimeout(tooltipTimeout);
     tooltip.classList.remove('opacity-100');
+    tooltip.classList.add('pointer-events-none');
     setTimeout(() => {
         if (!tooltip.classList.contains('opacity-100')) {
             tooltip.classList.add('hidden');
         }
     }, 200);
 }
+
+// Prevent clicks on the tooltip panel itself from dismissing it
+tooltip.addEventListener('click', e => e.stopPropagation());
 
 function updateTooltipPos(e) {
     const xOffset = 16;
@@ -1783,14 +1787,66 @@ function updateTooltipPos(e) {
     tooltip.style.top = `${y}px`;
 }
 
-document.querySelectorAll('[id$="C_label"], input[type="range"]').forEach(el => {
-    const id = el.id.replace('C_label', '');
+// ── Info icon buttons ─────────────────────────────────────────────────────────
+// Dynamically inject an "ⓘ" button after every slider label that has tooltip
+// data. Clicking it pins/unpins the info panel; clicking elsewhere dismisses it.
+let tooltipPinned = false;
 
-    el.addEventListener('mouseenter', e => showTooltip(id, e));
-    el.addEventListener('mousemove', updateTooltipPos);
-    el.addEventListener('mouseleave', hideTooltip);
+document.querySelectorAll('[id$="C_label"]').forEach(labelEl => {
+    const id = labelEl.id.replace('C_label', '');
+    if (!TOOLTIP_DATA[id]) return;
 
-    el.addEventListener('touchstart', e => showTooltip(id, e));
-    el.addEventListener('touchmove', updateTooltipPos);
-    el.addEventListener('touchend', hideTooltip);
+    // Group label + info button in a flex wrapper
+    const wrapper = document.createElement('div');
+    wrapper.className = 'flex items-center gap-1';
+    labelEl.parentNode.insertBefore(wrapper, labelEl);
+    wrapper.appendChild(labelEl);
+
+    const btn = document.createElement('button');
+    btn.className = 'info-icon-btn';
+    btn.setAttribute('data-tooltip-id', id);
+    btn.setAttribute('type', 'button');
+    btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>`;
+    wrapper.appendChild(btn);
+
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const activeId = tooltip.getAttribute('data-active-id');
+        const isShown = !tooltip.classList.contains('hidden') && activeId === id;
+        if (isShown) {
+            tooltipPinned = false;
+            tooltip.removeAttribute('data-active-id');
+            hideTooltip();
+        } else {
+            tooltipPinned = true;
+            tooltip.setAttribute('data-active-id', id);
+            clearTimeout(tooltipTimeout);
+            const data = TOOLTIP_DATA[id];
+            tooltipTitle.innerText = data.title;
+            tooltipDesc.innerText = data.desc;
+            tooltipInc.innerText = data.inc;
+            tooltipDec.innerText = data.dec;
+            tooltip.classList.remove('hidden', 'pointer-events-none');
+            tooltip.offsetHeight;
+            tooltip.classList.add('opacity-100');
+            updateTooltipPos(e);
+        }
+    });
+});
+
+// Keep hover tooltips on range sliders (desktop only)
+document.querySelectorAll('input[type="range"]').forEach(el => {
+    const id = el.id;
+    el.addEventListener('mouseenter', e => { if (!tooltipPinned) showTooltip(id, e); });
+    el.addEventListener('mousemove',  e => { if (!tooltipPinned) updateTooltipPos(e); });
+    el.addEventListener('mouseleave',  () => { if (!tooltipPinned) hideTooltip(); });
+});
+
+// Dismiss pinned tooltip when clicking anywhere outside an info button
+document.addEventListener('click', () => {
+    if (tooltipPinned) {
+        tooltipPinned = false;
+        tooltip.removeAttribute('data-active-id');
+        hideTooltip();
+    }
 });

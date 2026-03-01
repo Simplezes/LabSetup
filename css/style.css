@@ -1400,3 +1400,29 @@ body.mode-basic .setting-advanced {
     position: fixed;
     pointer-events: none;
 }
+
+/* Info icon button next to each slider label */
+.info-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: rgba(100, 116, 139, 0.45);
+    transition: color 0.2s, transform 0.15s;
+    line-height: 1;
+}
+
+.info-icon-btn:hover,
+.info-icon-btn:focus-visible {
+    color: rgb(96, 165, 250);
+    outline: none;
+    transform: scale(1.2);
+}
+
+.info-icon-btn[data-active="true"] {
+    color: rgb(96, 165, 250);
+}
