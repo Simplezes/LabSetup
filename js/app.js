@@ -869,20 +869,64 @@ function update() {
     const rBaseHeat = Math.max(trackTemp, baseHeat + rDuctHeat + rSpringHeatMod + rHystHeat + 26);
 
 
-    const fScrubHeat = (Math.abs(vals.ftoe) * 8) + (Math.abs(vals.fcam) * 3.5);
-    const rScrubHeat = (Math.abs(vals.rtoe) * 8) + (Math.abs(vals.rcam) * 3.5);
+    // ------------------------------------------------------------------
+    // tyre temperature modelling (three‑band: inside / centre / outside)
+    // ------------------------------------------------------------------
+    // A) Base temperature is influenced by track/ambient, ducting, spring
+    //    heat and tyre hysteresis.  These are already captured above as
+    //    fBaseHeat and rBaseHeat.
+    // B) Friction work and slip angle generate heat.  the real sim uses
+    //    lateral load and wheelspin; here we approximate them with a simple
+    //    proxy built from camber and toe.  More slip raises shoulder temps.
+    // C) Camber shifts vertical load between the two shoulders.  Negative
+    //    camber loads the inside, positive/low camber favours the outside.
+    // D) Pressure alters the contact patch shape, which we apply to the
+    //    centre band only – overpressure warms the centre, underpressure
+    //    cools it relative to the shoulders.
+    // The constants below were chosen to produce realistic-looking numbers
+    // in the 70‑100 °C range and to reflect the “ideal temperature spread”
+    // described in the LMU write‑up.  They are not a full physics engine,
+    // but they behave sensibly for tuning purposes.
 
-    const heatF_O = fBaseHeat;
-    const heatF_I = heatF_O + fScrubHeat;
-    const heatR_O = rBaseHeat;
-    const heatR_I = heatR_O + rScrubHeat;
+    // slip proxy: a weighted average of camber and toe
+    const fSlipProxy = Math.abs(vals.fcam) * 0.7 + Math.abs(vals.ftoe) * 0.3;
+    const rSlipProxy = Math.abs(vals.rcam) * 0.7 + Math.abs(vals.rtoe) * 0.3;
+    const fSlipHeat = fSlipProxy * 10;   // scales into °C
+    const rSlipHeat = rSlipProxy * 10;
 
+    // camber load shift: negative camber (>effort to inside) gives positive
+    // contribution to inside shoulder temperature
+    const fCamberLoadShift = -vals.fcam * 5;
+    const rCamberLoadShift = -vals.rcam * 5;
+
+    // outside shoulder: always at least base heat; additional heat due to
+    // slip/angle and low/positive camber (understeer, scrubbing)
+    const heatF_O = fBaseHeat
+        + fSlipHeat * (vals.fcam > -1 ? 1.0 : 0.5)
+        + Math.max(0, vals.fcam) * 2;
+    const heatR_O = rBaseHeat
+        + rSlipHeat * (vals.rcam > -1 ? 1.0 : 0.5)
+        + Math.max(0, vals.rcam) * 2;
+
+    // inside shoulder: base plus a fraction of the slip heat and any camber
+    // load shift (only when camber is negative)
+    const heatF_I = fBaseHeat
+        + fSlipHeat * (vals.fcam < 0 ? 0.6 : 0.2)
+        + Math.max(0, fCamberLoadShift);
+    const heatR_I = rBaseHeat
+        + rSlipHeat * (vals.rcam < 0 ? 0.6 : 0.2)
+        + Math.max(0, rCamberLoadShift);
+
+    // pressure influence on centre band
     const fPressShift = (vals.tpressure_f - optPress) * 0.43;
     const rPressShift = (vals.tpressure_r - optPress) * 0.43;
 
-    const heatF_C = Math.max(trackTemp, (heatF_I + heatF_O) / 2 + fPressShift);
-    const heatR_C = Math.max(trackTemp, (heatR_I + heatR_O) / 2 + rPressShift);
+    // centre temperature is average of shoulders plus pressure shift, but
+    // never below ambient/track temperature
+    const heatF_C = Math.max(trackTemp, (heatF_I + heatF_O) * 0.5 + fPressShift);
+    const heatR_C = Math.max(trackTemp, (heatR_I + heatR_O) * 0.5 + rPressShift);
 
+    // use centre temperature for overall thermal grip calculations
     const heatF = heatF_C;
     const heatR = heatR_C;
 
@@ -1080,20 +1124,16 @@ function update() {
         return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     };
 
-    const updateTyreTriple = (id, Ti, Tc, To) => {
-        const zones = ['I', 'C', 'O'];
-        const temps = { 'I': Ti, 'C': Tc, 'O': To };
-
-        zones.forEach(z => {
-            const hEl = document.getElementById(`heat${id}_${z}`);
-            if (hEl) hEl.style.backgroundColor = getZoneColor(temps[z]);
-        });
+    const updateTyreSingle = (id, temp) => {
+        const hEl = document.getElementById(`heat${id}`);
+        if (hEl) hEl.style.backgroundColor = getZoneColor(temp);
     };
 
-    updateTyreTriple('FL', heatF_I + 2, heatF_C + 2, heatF_O + 2);
-    updateTyreTriple('FR', heatF_I, heatF_C, heatF_O);
-    updateTyreTriple('RL', heatR_I + 1, heatR_C + 1, heatR_O + 1);
-    updateTyreTriple('RR', heatR_I, heatR_C, heatR_O);
+    // use centre-band temperature as the general tyre temperature
+    updateTyreSingle('FL', heatF_C + 2);
+    updateTyreSingle('FR', heatF_C);
+    updateTyreSingle('RL', heatR_C + 1);
+    updateTyreSingle('RR', heatR_C);
 
     const updateDamperColor = (el, intensity, maxRange) => {
         if (!el) return;
