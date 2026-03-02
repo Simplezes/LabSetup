@@ -31,6 +31,40 @@
     },
     "cars": [
         {
+            "id": "aston_martin_vantage_lmgt3",
+            "mass_kg": 1306,
+            "weight_dist_f": 0.500,
+            "h_cg_mm": 410,
+            "wheelbase_m": 2.705,
+            "motion_ratio": {
+                "front": 0.84,
+                "rear": 0.78
+            },
+            "steering_ratio": 12.8,
+            "aero": {
+                "base_cl": -2.95,
+                "base_cd": 0.70,
+                "cop_front": 0.39
+            }
+        },
+        {
+            "id": "porsche_911_gt3_r_992",
+            "mass_kg": 1317,
+            "weight_dist_f": 0.395,
+            "h_cg_mm": 385,
+            "wheelbase_m": 2.507,
+            "motion_ratio": {
+                "front": 0.80,
+                "rear": 0.80
+            },
+            "steering_ratio": 11.5,
+            "aero": {
+                "base_cl": -3.20,
+                "base_cd": 0.73,
+                "cop_front": 0.44
+            }
+        },
+        {
             "id": "bmw_m4_lmgt3",
             "mass_kg": 1339,
             "weight_dist_f": 0.515,
