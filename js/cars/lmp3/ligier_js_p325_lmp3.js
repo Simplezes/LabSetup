@@ -37,8 +37,8 @@ window.CARS["ligier_js_p325_lmp3"] = {
             items: [
                 { id: "fh", name: "Front Ride Height", type: "numeric", unit: "mm", min: 40.0, max: 60.0, step: 0.5, default: 44.0 },
                 { id: "rh", name: "Rear Ride Height", type: "numeric", unit: "mm", min: 50.0, max: 90.0, step: 0.5, default: 72.0 },
-                { id: "fs", name: "Front Springs", type: "numeric", unit: "Lbf/in", min: 700, max: 1250, step: 25, default: 1200 },
-                { id: "rs", name: "Rear Springs", type: "numeric", unit: "Lbf/in", min: 700, max: 1250, step: 25, default: 750 },
+                { id: "fs", name: "Front Springs", type: "numeric", unit: "lbf/in", min: 700, max: 1250, step: 25, default: 1200 },
+                { id: "rs", name: "Rear Springs", type: "numeric", unit: "lbf/in", min: 700, max: 1250, step: 25, default: 750 },
                 { id: "fpk", name: "Front Packers", type: "numeric", unit: "mm", min: 5.0, max: 32.0, step: 0.5, default: 10.0 },
                 { id: "rpk", name: "Rear Packers", type: "numeric", unit: "mm", min: 7.5, max: 48.0, step: 0.5, default: 10.0 },
                 {
