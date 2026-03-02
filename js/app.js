@@ -175,7 +175,7 @@ function initTracks() {
 }
 
 const CAR_CATEGORIES = {
-    'LMGT3': { ids: ['bmw_m4_lmgt3', 'chevrolet_corvette_Z06_r', 'ferrari_296_lmgt3', 'ford_mustang_lmgt3', 'lamborghini_huracan_lmgt3_evo2', 'lexus_rcf_lmgt3', 'mclaren_720s_lmgt3_evo', 'mercedes_amg_lmgt3'], color: '#0ea5e9' },
+    'LMGT3': { ids: ['aston_martin_vantage_lmgt3', 'bmw_m4_lmgt3', 'chevrolet_corvette_Z06_r', 'ferrari_296_lmgt3', 'ford_mustang_lmgt3', 'lamborghini_huracan_lmgt3_evo2', 'lexus_rcf_lmgt3', 'mclaren_720s_lmgt3_evo', 'mercedes_amg_lmgt3', 'porsche_911_gt3_r_lmgt3'], color: '#0ea5e9' },
     'LMP2': { ids: ['oreca_07_gibson_lmp2'], color: '#10b981' },
     'LMP3': { ids: ['ginetta_g61_lmp3', 'ligier_js_p325_lmp3'], color: '#f59e0b' },
 };
@@ -218,9 +218,6 @@ function renderMachineDropdown() {
             btn.className = `dropdown-item ${isActive ? 'active' : ''}`;
             btn.innerHTML = `
                 <span class="track-name">${car.name}</span>
-                <div class="flex items-center gap-2 mt-0.5">
-                    <span class="track-info">${className}</span>
-                </div>
             `;
             btn.onclick = () => {
                 loadCar(id);
@@ -348,8 +345,6 @@ function selectTrack(id) {
         update();
     }
 }
-
-
 
 function initTooltips() {
     const tooltip = document.createElement('div');
@@ -555,8 +550,8 @@ function update() {
     // Chassis & Aero
     setLabel('ftoe', vals.ftoe, 'ftoe');
     setLabel('rtoe', vals.rtoe, 'rtoe');
-    setLabel('farb', vals.farb, 'farb');
-    setLabel('rarb', vals.rarb, 'rarb');
+    els.farbV.innerText = getArbLabel(vals.farb, 'farb');
+    els.rarbV.innerText = getArbLabel(vals.rarb, 'rarb');
     setLabel('wing', vals.wing, 'wing');
     setLabel('tender_f', vals.tender_f, 'tender_f');
 
@@ -610,8 +605,7 @@ function update() {
 
     const naturalBalance = phys.naturalBalance ?? 0.0;
     const mechanicalBias = weightDistF;
-    const aeroSensitivity = phys.aeroSensitivity ?? 1.0;
-    const damperCurve = phys.damperCurve || 'linear';
+    const aeroSensitivity = phys.sensitivity ?? 1.0;
     const tyreWindow = phys.tyreWindow || [80, 90];
 
     const physValLocal = (id, val) => getPhysVal(id, val, CAR);
@@ -619,8 +613,6 @@ function update() {
         const r = getParamRange(id);
         return r.max - r.min;
     };
-
-
 
     const fsbRange = getParamRange('fsb');
     const fsrRange = getParamRange('fsr');
@@ -642,8 +634,6 @@ function update() {
 
     const stdDeltaLocal = (id, raw) => getStandardizedDelta(CAR, DEFAULTS, id, raw);
 
-
-
     const nWing = stdDeltaLocal('wing', vals.wing);
     const nFARB = stdDeltaLocal('farb', vals.farb);
     const nRARB = stdDeltaLocal('rarb', vals.rarb);
@@ -656,14 +646,12 @@ function update() {
     const nFCam = stdDeltaLocal('fcam', vals.fcam);
     const nRCam = stdDeltaLocal('rcam', vals.rcam);
 
-
     const optPress = (CAR.physics?.tyre_physics?.compound_medium?.optimal_pressure_kpa) || 190;
 
     const nPressF = (vals.tpressure_f - optPress) / (getRangeDelta('tpressure_f') || 1);
     const nPressR = (vals.tpressure_r - optPress) / (getRangeDelta('tpressure_r') || 1);
     const nFBD = stdDeltaLocal('fbd', vals.fbd);
     const nRBD = stdDeltaLocal('rbd', vals.rbd);
-
 
     const nFSB = (vals.fsb - DEFAULTS.fsb) / (fSlowRange || 1);
     const nFSR = (vals.fsr - DEFAULTS.fsr) / (fSlowRange || 1);
@@ -1034,7 +1022,7 @@ document.querySelectorAll('.comp-btn').forEach(btn => {
 function switchView(target) {
     const views = ['radar', 'bars'];
     views.forEach(v => {
-        const btn = els[`view${v.charAt(0).toUpperCase() + v.slice(1)}Btn`];
+        const btn = els[`view${v.charAt(0).toUpperCase() + v.slice(1)}`];
         const view = els[`${v}View`];
         if (!btn || !view) return;
 
@@ -1053,8 +1041,8 @@ function switchView(target) {
         }
     });
 }
-if (els.viewRadarBtn) els.viewRadarBtn.onclick = () => switchView('radar');
-if (els.viewBarsBtn) els.viewBarsBtn.onclick = () => switchView('bars');
+if (els.viewRadar) els.viewRadar.onclick = () => switchView('radar');
+if (els.viewBars) els.viewBars.onclick = () => switchView('bars');
 
 const getStorageKey = () => window.LMA_Setup.getStorageKey(CAR);
 const gatherCurrentSetup = () => window.LMA_Setup.gatherCurrentSetup(CAR, els);
