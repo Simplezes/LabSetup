@@ -963,22 +963,6 @@ body.mode-basic .setting-advanced {
 }
 
 /* ─── Garage Panel Redesign ───────────────────────────────────────────────── */
-
-/* Overlay entrance animation */
-#garageOverlay:not(.hidden) {
-    animation: garageIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes garageIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 /* Sticky header frosted background */
 .garage-header-bg {
     background: rgba(2, 6, 23, 0.92);
