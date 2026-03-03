@@ -151,6 +151,9 @@ window.LMA_UI = {
         fuelResultSafety: document.getElementById('fuelResultSafety'),
         fuelModeTime: document.getElementById('fuelModeTime'),
         fuelModeLaps: document.getElementById('fuelModeLaps'),
+        fuelLapsInput: document.getElementById('fuelLapsInput'),
+        fuelTimeInputs: document.getElementById('fuelTimeInputs'),
+        fuelLapTimeLabel: document.getElementById('fuelLapTimeLabel'),
 
         // View Toggles
         viewRadar: document.getElementById('viewRadar'),

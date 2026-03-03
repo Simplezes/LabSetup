@@ -1361,6 +1361,7 @@ function initFuelCalculator() {
             els.fuelModeLaps.classList.remove('bg-blue-500/20', 'text-blue-400', 'border-blue-500/30');
             els.fuelTimeInputs.classList.remove('hidden');
             els.fuelLapsInput.classList.add('hidden');
+            els.fuelLapTimeLabel.classList.remove('hidden');
             calculateFuel();
         };
     }
@@ -1374,6 +1375,7 @@ function initFuelCalculator() {
             els.fuelModeTime.classList.remove('bg-blue-500/20', 'text-blue-400', 'border-blue-500/30');
             els.fuelLapsInput.classList.remove('hidden');
             els.fuelTimeInputs.classList.add('hidden');
+            els.fuelLapTimeLabel.classList.add('hidden');
             calculateFuel();
         };
     }
