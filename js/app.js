@@ -1307,30 +1307,43 @@ let fuelMode = 'time';
 
 function calculateFuel() {
     if (!els.fuelLapMin) return;
+
     const min = parseInt(els.fuelLapMin.value) || 0;
     const sec = parseInt(els.fuelLapSec.value) || 0;
     const ms = parseInt(els.fuelLapMs.value) || 0;
     const lapTimeSec = (min * 60) + sec + (ms / 1000);
 
+    if (lapTimeSec <= 0) return;
+
     const fuelPerLap = parseFloat(els.fuelPerLapInput.value) || 0;
+    if (fuelPerLap <= 0) return;
 
     let totalLaps = 0;
+
     if (fuelMode === 'time') {
         const hrs = parseInt(els.fuelHours.value) || 0;
         const mins = parseInt(els.fuelMinutes.value) || 0;
         const totalSec = (hrs * 3600) + (mins * 60);
-        if (lapTimeSec > 0) {
-            totalLaps = totalSec / lapTimeSec;
-        }
+
+        const estimatedLaps = totalSec / lapTimeSec;
+
+        totalLaps = Math.ceil(estimatedLaps) + 1;
+
     } else {
         totalLaps = parseInt(els.fuelTotalLaps.value) || 0;
     }
 
-    const reqFuel = totalLaps * fuelPerLap;
-    const safetyFuel = (Math.ceil(totalLaps) + 1) * fuelPerLap;
+    const roundedLaps = Math.ceil(totalLaps);
+    const requiredFuel = roundedLaps * fuelPerLap;
 
-    els.fuelResultLaps.innerText = Math.ceil(totalLaps);
-    els.fuelResultFuel.innerText = reqFuel.toFixed(1) + ' L';
+    const extraSafetyLaps = 2;
+    const variancePercent = 0.05;
+
+    const safetyLaps = roundedLaps + extraSafetyLaps;
+    const safetyFuel = safetyLaps * fuelPerLap * (1 + variancePercent);
+
+    els.fuelResultLaps.innerText = roundedLaps;
+    els.fuelResultFuel.innerText = requiredFuel.toFixed(1) + ' L';
     els.fuelResultSafety.innerText = safetyFuel.toFixed(1) + ' L';
 }
 
