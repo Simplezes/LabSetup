@@ -20,5 +20,5 @@
 - **Tailwind CSS:** Modern utility-first styling for a sleek, glassmorphism-inspired UI.
 - **SVG Graphics:** Scalable, crisp performance visualizations.
 
-*Note: This tool does not fully simulate LMU physics but it is a work in progress :)*
+*Note: Simulation values are approximate — results may not reflect 100% in game behaviour.*
                 
