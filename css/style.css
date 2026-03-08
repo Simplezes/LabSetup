@@ -1,3 +1,58 @@
+/* ─── Game Switching ─────────────────────────────────────────────────────────── */
+
+/* AC panel hidden by default; shown only when data-game="ac" */
+#ac-panel { display: none; }
+
+body[data-game="ac"] #lmu-panel       { display: none !important; }
+body[data-game="ac"] .lmu-only-section { display: none !important; }
+body[data-game="lmu"] .ac-only-section { display: none !important; }
+
+/* Desktop: AC panel spans the space freed by the hidden LMU panel + center panel */
+@media (min-width: 1024px) {
+    body[data-game="ac"] #lmu-main-area { display: none !important; }
+    body[data-game="ac"] #ac-panel {
+        display: flex !important;
+        grid-column: span 10 / span 10;
+    }
+}
+
+/* Mobile: AC panel simply stacks */
+@media (max-width: 1023px) {
+    body[data-game="ac"] #ac-panel { display: flex !important; }
+}
+
+/* ─── Game Selector ─────────────────────────────────────────────────────────── */
+.game-selector {
+    gap: 2px;
+}
+
+.game-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    opacity: 0.35;
+    filter: grayscale(0.6);
+    cursor: pointer;
+    background: #ffffff;
+    border: none;
+}
+
+.game-btn:hover {
+    opacity: 0.7;
+    filter: grayscale(0);
+    background: #ffffff;
+}
+
+.game-btn.active {
+    opacity: 1;
+    filter: grayscale(0);
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
 /* ─── Design Tokens ──────────────────────────────────────────────────────────── */
 :root {
     --blue: #0ea5e9;

@@ -39,6 +39,14 @@
             </div>
 
             <div class="flex gap-4 items-center">
+                <div id="gameSelector" class="game-selector flex bg-panel-alt rounded p-0.5 border border-white border-opacity-5">
+                    <button id="gameLMU" class="game-btn active" title="Le Mans Ultimate">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/LeMansUltimateLogo.png" alt="Le Mans Ultimate" class="h-5 w-auto object-contain">
+                    </button>
+                    <button id="gameAC" class="game-btn" title="Assetto Corsa">
+                        <img src="https://upload.wikimedia.org/wikipedia/fr/6/6f/Assetto_Corsa_Logo.svg" alt="Assetto Corsa" class="h-5 w-auto object-contain">
+                    </button>
+                </div>
                 <div class="mode-toggle flex bg-panel-alt rounded p-0.5 border border-white border-opacity-5">
                     <button id="modeBasic"
                         class="px-3 py-1 rounded text-[10px] font-bold tracking-widest transition-all duration-300">BASIC</button>
@@ -91,7 +99,7 @@
                     </div>
                 </div>
 
-                <div class="smart-section group collapsed">
+                <div class="smart-section group collapsed lmu-only-section">
                     <div class="sidebar-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
                         <div class="accent-bar !bg-amber-500"></div>
                         <span>AMBIENT</span>
@@ -145,7 +153,7 @@
                     </div>
                 </div>
 
-                <div class="smart-section group relative collapsed">
+                <div class="smart-section group relative collapsed lmu-only-section">
                     <div class="sidebar-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
                         <div class="accent-bar !bg-blue-500"></div>
                         <span>CIRCUIT</span>
@@ -180,6 +188,41 @@
                     </div>
 
                     <div id="trackDropdown" class="dropdown-menu custom-scrollbar">
+                    </div>
+                </div>
+
+                <div class="smart-section group relative collapsed ac-only-section">
+                    <div class="sidebar-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <div class="accent-bar !bg-blue-500"></div>
+                        <span>CIRCUIT</span>
+                        <svg class="chevron-icon" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </div>
+                    <div class="section-content p-2">
+                        <button id="ac-openTrackBtn" class="track-card-compact w-full group">
+                            <div class="track-card-accent-line"></div>
+                            <div class="flex flex-col relative z-10">
+                                <span id="ac-currentTrack"
+                                    class="font-bold tracking-widest text-[11px] text-blue-500 uppercase italic text-left">— SELECT CIRCUIT —</span>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span
+                                        class="text-[8px] text-slate-500 font-bold uppercase tracking-tighter opacity-70">SETUPS</span>
+                                    <span id="ac-trackSetupCount"
+                                        class="text-[9px] text-slate-400 font-mono uppercase">0</span>
+                                </div>
+                            </div>
+                            <div
+                                class="absolute right-3 top-1/2 -translate-y-1/2 opacity-20 group-hover:opacity-100 group-hover:text-blue-500 transition-all duration-300">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                    <div id="ac-trackDropdown" class="dropdown-menu custom-scrollbar">
                     </div>
                 </div>
 
@@ -308,7 +351,7 @@
 
             </aside>
 
-            <main
+            <main id="lmu-main-area"
                 class="col-span-12 lg:col-span-6 flex flex-col gap-4 lg:overflow-y-auto pr-2 overflow-x-hidden custom-scrollbar">
 
                 <div
@@ -512,7 +555,7 @@
 
             </main>
 
-            <aside
+            <aside id="lmu-panel"
                 class="col-span-12 lg:col-span-4 flex flex-col gap-4 lg:overflow-y-auto pr-2 custom-scrollbar relative">
 
                 <div
@@ -1025,6 +1068,231 @@
                 </div>
 
             </aside>
+
+            <!-- ─── Assetto Corsa Setup Panel ─────────────────────────────────────── -->
+            <aside id="ac-panel" class="col-span-12 lg:col-span-4 flex-col gap-4 lg:overflow-y-auto pr-2 custom-scrollbar relative">
+
+                <!-- Sticky header: tabs + export button -->
+                <div class="sticky top-0 z-[100] bg-bg/95 backdrop-blur-md pb-3 pt-3 lg:pt-0 -mx-4 px-4 lg:mx-0 lg:px-0 flex flex-col gap-3 border-b border-white/5 flex-none mb-2">
+                    <div class="flex items-center gap-2 pt-1">
+                        <div class="flex gap-1 flex-wrap flex-1">
+                            <button class="ac-tab-btn active px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-white/5 bg-panel text-white hover:bg-white/5 transition-all" data-target="ac-tab-tires">TIRES</button>
+                            <button class="ac-tab-btn px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-transparent text-slate-500 hover:text-white transition-all" data-target="ac-tab-alignment">ALIGNMENT</button>
+                            <button class="ac-tab-btn px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-transparent text-slate-500 hover:text-white transition-all" data-target="ac-tab-suspension">SUSPENSION</button>
+                            <button class="ac-tab-btn px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase border border-transparent text-slate-500 hover:text-white transition-all" data-target="ac-tab-dampers">DAMPERS</button>
+                        </div>
+                        <!-- Session toggle: Q→R ONLY changes fuel +8L, pressures stay the same -->
+                        <div class="flex gap-0.5 flex-shrink-0">
+                            <button id="ac-session-q" data-session="Q" class="px-2.5 py-1 text-[9px] font-bold border text-white transition-all" style="border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.06)">Q</button>
+                            <button id="ac-session-r" data-session="R" class="px-2.5 py-1 text-[9px] font-bold border border-transparent text-slate-500 hover:text-white transition-all">R</button>
+                        </div>
+                    </div>
+                    <button id="ac-export-btn" class="flex items-center justify-center gap-2 w-full px-3 py-2 bg-green-500/10 border border-green-500/30 text-[9px] font-bold text-green-400 hover:bg-green-500/20 transition-all rounded-sm uppercase tracking-widest">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        EXPORT .INI
+                    </button>
+                </div>
+
+                <!-- ── TIRES tab ── -->
+                <div id="ac-tab-tires" class="ac-tab-content p-3 border border-white/5 bg-panel space-y-4">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Electronics</h3>
+                    <div class="space-y-3">
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Fuel</span>
+                                <span id="ac_FUEL_V" class="text-[10px] text-blue-500 font-mono">20 L</span>
+                            </div>
+                            <input type="range" id="ac_FUEL" min="0" max="60" step="1" value="20" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="space-y-1">
+                                <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest block mb-1">ABS</span>
+                                <div class="flex gap-1">
+                                    <button id="ac_ABS_0" class="flex-1 px-2 py-1.5 text-[9px] font-bold border border-white/5 text-slate-500 hover:bg-white/5 transition-all rounded-sm">OFF</button>
+                                    <button id="ac_ABS_1" class="flex-1 px-2 py-1.5 text-[9px] font-bold border border-blue-500/30 bg-blue-500/10 text-blue-400 transition-all rounded-sm">ON</button>
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between items-end">
+                                    <span class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">TC</span>
+                                    <span id="ac_TRACTION_CONTROL_V" class="text-[9px] text-blue-500 font-mono">0</span>
+                                </div>
+                                <input type="range" id="ac_TRACTION_CONTROL" min="0" max="4" step="1" value="0" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Brake Power</span>
+                                <span id="ac_BRAKE_POWER_MULT_V" class="text-[10px] text-blue-500 font-mono">100%</span>
+                            </div>
+                            <input type="range" id="ac_BRAKE_POWER_MULT" min="80" max="100" step="1" value="100" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer">
+                        </div>
+                    </div>
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pt-2 border-t border-white/5">Tire Pressure (PSI)</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FL</span><span id="ac_PRESSURE_LF_V" class="text-[9px] text-blue-500 font-mono">19 PSI</span></div><input type="range" id="ac_PRESSURE_LF" min="15" max="35" step="1" value="19" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FR</span><span id="ac_PRESSURE_RF_V" class="text-[9px] text-blue-500 font-mono">19 PSI</span></div><input type="range" id="ac_PRESSURE_RF" min="15" max="35" step="1" value="19" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RL</span><span id="ac_PRESSURE_LR_V" class="text-[9px] text-blue-500 font-mono">19 PSI</span></div><input type="range" id="ac_PRESSURE_LR" min="15" max="35" step="1" value="19" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RR</span><span id="ac_PRESSURE_RR_V" class="text-[9px] text-blue-500 font-mono">19 PSI</span></div><input type="range" id="ac_PRESSURE_RR" min="15" max="35" step="1" value="19" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                    </div>
+                    <!-- Ambient Temp selector: T≤15°C → +1 PSI, T=20°C → 0, T≥25°C → -1 PSI vs working target -->
+                    <div class="border-t border-white/5 pt-3 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Ambient Temp</span>
+                            <div class="flex gap-0.5">
+                                <button class="ac-temp-btn px-2.5 py-1 text-[8px] font-bold border border-white/5 text-slate-400 hover:bg-white/5 transition-all" data-temp="15">15°C</button>
+                                <button class="ac-temp-btn px-2.5 py-1 text-[8px] font-bold border border-white/5 text-slate-400 hover:bg-white/5 transition-all" data-temp="20">20°C</button>
+                                <button class="ac-temp-btn px-2.5 py-1 text-[8px] font-bold border border-white/5 text-slate-400 hover:bg-white/5 transition-all" data-temp="25">25°C</button>
+                            </div>
+                        </div>
+                        <p id="ac-pressure-hint" class="text-[9px] italic text-slate-500"></p>
+                    </div>
+                </div>
+
+                <!-- ── ALIGNMENT tab ── -->
+                <div id="ac-tab-alignment" class="ac-tab-content p-3 border border-white/5 bg-panel space-y-4 hidden">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Camber</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FL</span><span id="ac_CAMBER_LF_V" class="text-[9px] text-blue-500 font-mono">-3.8°</span></div><input type="range" id="ac_CAMBER_LF" min="-64" max="0" step="2" value="-38" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FR</span><span id="ac_CAMBER_RF_V" class="text-[9px] text-blue-500 font-mono">-3.6°</span></div><input type="range" id="ac_CAMBER_RF" min="-64" max="0" step="2" value="-36" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RL</span><span id="ac_CAMBER_LR_V" class="text-[9px] text-blue-500 font-mono">-2.0°</span></div><input type="range" id="ac_CAMBER_LR" min="-32" max="0" step="2" value="-20" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RR</span><span id="ac_CAMBER_RR_V" class="text-[9px] text-blue-500 font-mono">-2.0°</span></div><input type="range" id="ac_CAMBER_RR" min="-32" max="0" step="2" value="-20" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                    </div>
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pt-2 border-t border-white/5">Toe (out +)</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FL</span><span id="ac_TOE_OUT_LF_V" class="text-[9px] text-blue-500 font-mono">0.12°</span></div><input type="range" id="ac_TOE_OUT_LF" min="-50" max="50" step="1" value="12" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FR</span><span id="ac_TOE_OUT_RF_V" class="text-[9px] text-blue-500 font-mono">0.12°</span></div><input type="range" id="ac_TOE_OUT_RF" min="-50" max="50" step="1" value="12" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RL</span><span id="ac_TOE_OUT_LR_V" class="text-[9px] text-blue-500 font-mono">0.31°</span></div><input type="range" id="ac_TOE_OUT_LR" min="0" max="60" step="1" value="31" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RR</span><span id="ac_TOE_OUT_RR_V" class="text-[9px] text-blue-500 font-mono">0.32°</span></div><input type="range" id="ac_TOE_OUT_RR" min="0" max="60" step="1" value="32" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                    </div>
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pt-2 border-t border-white/5">Anti-Roll Bar</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-500 uppercase">Front</span><span id="ac_ARB_FRONT_V" class="text-[9px] text-blue-500 font-mono">2</span></div><input type="range" id="ac_ARB_FRONT" min="0" max="5" step="1" value="2" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-500 uppercase">Rear</span><span id="ac_ARB_REAR_V" class="text-[9px] text-blue-500 font-mono">1</span></div><input type="range" id="ac_ARB_REAR" min="0" max="5" step="1" value="1" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                    </div>
+                </div>
+
+                <!-- ── SUSPENSION tab ── -->
+                <div id="ac-tab-suspension" class="ac-tab-content p-3 border border-white/5 bg-panel space-y-4 hidden">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Spring Rate (N/mm)</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FL</span><span id="ac_SPRING_RATE_LF_V" class="text-[9px] text-blue-500 font-mono">42 N/mm</span></div><input type="range" id="ac_SPRING_RATE_LF" min="24" max="100" step="2" value="42" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FR</span><span id="ac_SPRING_RATE_RF_V" class="text-[9px] text-blue-500 font-mono">42 N/mm</span></div><input type="range" id="ac_SPRING_RATE_RF" min="24" max="100" step="2" value="42" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RL</span><span id="ac_SPRING_RATE_LR_V" class="text-[9px] text-blue-500 font-mono">62 N/mm</span></div><input type="range" id="ac_SPRING_RATE_LR" min="36" max="140" step="2" value="62" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RR</span><span id="ac_SPRING_RATE_RR_V" class="text-[9px] text-blue-500 font-mono">62 N/mm</span></div><input type="range" id="ac_SPRING_RATE_RR" min="36" max="140" step="2" value="62" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                    </div>
+                    <!-- Spring F/R ratio: <0.65 DANGER, 0.65-0.70 HIGH SPEED, 0.70-0.75 NEUTRAL, >0.75 UNDERSTEER -->
+                    <div class="flex items-center justify-between px-2 py-2 bg-slate-900/60 border border-white/5">
+                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">F/R Spring Ratio</span>
+                        <div class="flex items-center gap-2">
+                            <span id="ac-spring-ratio-val" class="text-[11px] font-mono font-bold" style="color:#ff8c40">—</span>
+                            <span id="ac-spring-ratio-zone" class="text-[8px] font-bold uppercase tracking-widest" style="color:#ff8c40">—</span>
+                        </div>
+                    </div>
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pt-2 border-t border-white/5">Ride Height (Rod Length)</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FL</span><span id="ac_ROD_LENGTH_LF_V" class="text-[9px] text-blue-500 font-mono">2</span></div><input type="range" id="ac_ROD_LENGTH_LF" min="-5" max="10" step="1" value="2" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FR</span><span id="ac_ROD_LENGTH_RF_V" class="text-[9px] text-blue-500 font-mono">2</span></div><input type="range" id="ac_ROD_LENGTH_RF" min="-5" max="10" step="1" value="2" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RL</span><span id="ac_ROD_LENGTH_LR_V" class="text-[9px] text-blue-500 font-mono">0</span></div><input type="range" id="ac_ROD_LENGTH_LR" min="-5" max="10" step="1" value="0" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RR</span><span id="ac_ROD_LENGTH_RR_V" class="text-[9px] text-blue-500 font-mono">0</span></div><input type="range" id="ac_ROD_LENGTH_RR" min="-5" max="10" step="1" value="0" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                    </div>
+                </div>
+
+                <!-- ── DAMPERS tab ── -->
+                <div id="ac-tab-dampers" class="ac-tab-content p-3 border border-white/5 bg-panel space-y-4 hidden">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Bump Damping</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FL</span><span id="ac_DAMP_BUMP_LF_V" class="text-[9px] text-blue-500 font-mono">6</span></div><input type="range" id="ac_DAMP_BUMP_LF" min="1" max="14" step="1" value="6" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FR</span><span id="ac_DAMP_BUMP_RF_V" class="text-[9px] text-blue-500 font-mono">6</span></div><input type="range" id="ac_DAMP_BUMP_RF" min="1" max="14" step="1" value="6" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RL</span><span id="ac_DAMP_BUMP_LR_V" class="text-[9px] text-blue-500 font-mono">6</span></div><input type="range" id="ac_DAMP_BUMP_LR" min="1" max="14" step="1" value="6" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RR</span><span id="ac_DAMP_BUMP_RR_V" class="text-[9px] text-blue-500 font-mono">6</span></div><input type="range" id="ac_DAMP_BUMP_RR" min="1" max="14" step="1" value="6" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                    </div>
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pt-2 border-t border-white/5">Rebound Damping</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FL</span><span id="ac_DAMP_REBOUND_LF_V" class="text-[9px] text-blue-500 font-mono">5</span></div><input type="range" id="ac_DAMP_REBOUND_LF" min="1" max="14" step="1" value="5" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-blue-400/60 uppercase">FR</span><span id="ac_DAMP_REBOUND_RF_V" class="text-[9px] text-blue-500 font-mono">5</span></div><input type="range" id="ac_DAMP_REBOUND_RF" min="1" max="14" step="1" value="5" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RL</span><span id="ac_DAMP_REBOUND_LR_V" class="text-[9px] text-blue-500 font-mono">7</span></div><input type="range" id="ac_DAMP_REBOUND_LR" min="1" max="14" step="1" value="7" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                        <div class="space-y-1"><div class="flex justify-between items-end"><span class="text-[8px] font-bold text-slate-400/60 uppercase">RR</span><span id="ac_DAMP_REBOUND_RR_V" class="text-[9px] text-blue-500 font-mono">7</span></div><input type="range" id="ac_DAMP_REBOUND_RR" min="1" max="14" step="1" value="7" class="w-full h-1 bg-slate-900 rounded-none appearance-none cursor-pointer"></div>
+                    </div>
+                </div>
+
+                <!-- ── Setup Analysis (Stability Score + Warnings) ── -->
+                <div id="ac-status" class="p-3 border border-white/5 bg-panel space-y-3">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Setup Analysis</h3>
+                    <!-- Stability score (Sec. 7): toe_R + spring_ratio + ARB_R + camber_R + rebound_Δ — 20 pts each -->
+                    <div class="space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Stability Score</span>
+                            <span id="ac-stability-val" class="text-[11px] font-mono font-bold" style="color:#30d98a">—</span>
+                        </div>
+                        <div class="h-1.5 bg-slate-900 overflow-hidden">
+                            <div id="ac-stability-bar" class="h-full transition-all duration-300" style="width:0%;background:#30d98a"></div>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-[8px]" style="color:rgba(232,64,64,0.5)">0 UNSTABLE</span>
+                            <span class="text-[8px]" style="color:rgba(48,217,138,0.5)">100 STABLE</span>
+                        </div>
+                    </div>
+
+                    <!-- US/OS Balance: negative = understeer, positive = oversteer (Section 7) -->
+                    <div class="space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">US / OS Balance</span>
+                            <div class="flex items-center gap-2">
+                                <span id="ac-usos-val" class="text-[11px] font-mono font-bold" style="color:#30d98a">—</span>
+                                <span id="ac-usos-lbl" class="text-[8px] font-bold uppercase tracking-widest" style="color:#30d98a">—</span>
+                            </div>
+                        </div>
+                        <div class="relative h-1.5 bg-slate-900 overflow-hidden">
+                            <div class="absolute top-0 bottom-0 w-px" style="left:50%;background:rgba(255,255,255,0.08)"></div>
+                            <div id="ac-usos-bar" class="absolute top-0 bottom-0 transition-all duration-300" style="width:0%;background:#30d98a;left:50%"></div>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-[8px]" style="color:rgba(59,159,255,0.5)">← UNDERSTEER</span>
+                            <span class="text-[8px]" style="color:rgba(255,140,64,0.5)">OVERSTEER →</span>
+                        </div>
+                    </div>
+
+                    <!-- Camber delta F−R + estimated hot pressure compact row -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="px-2 py-1.5 bg-slate-900/60 border border-white/5">
+                            <div class="text-[7.5px] text-slate-500 uppercase font-bold tracking-widest mb-0.5">Camber Δ F−R</div>
+                            <div class="flex items-center gap-1.5">
+                                <span id="ac-camber-delta-val" class="text-[10px] font-mono font-bold" style="color:#5a7390">—</span>
+                                <span id="ac-camber-delta-zone" class="text-[7.5px] font-bold uppercase tracking-widest" style="color:#5a7390">—</span>
+                            </div>
+                        </div>
+                        <div class="px-2 py-1.5 bg-slate-900/60 border border-white/5">
+                            <div class="text-[7.5px] text-slate-500 uppercase font-bold tracking-widest mb-0.5">Est. Hot Pressure</div>
+                            <div class="flex items-center gap-1.5">
+                                <span id="ac-hot-pressure-val" class="text-[10px] font-mono font-bold" style="color:#5a7390">—</span>
+                                <span class="text-[7.5px] text-slate-500">PSI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parameter effect feedback (appears when a slider is moved) -->
+                    <div id="ac-param-feedback" class="hidden px-2 py-1.5 border border-blue-500/15" style="background:rgba(59,159,255,0.04)">
+                        <div id="ac-param-feedback-key" class="text-[7.5px] font-bold uppercase tracking-widest mb-0.5" style="color:rgba(59,159,255,0.65)"></div>
+                        <div id="ac-param-feedback-msg" class="text-[9px] leading-snug" style="color:#8ca8bf"></div>
+                    </div>
+
+                    <div id="ac-warnings"></div>
+                </div>
+
+                <!-- ── Presets ── -->
+                <div class="p-3 border border-white/5 bg-panel space-y-2">
+                    <h3 class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Presets</h3>
+                    <div id="ac-preset-container" class="grid grid-cols-1 gap-[1px] max-h-[30vh] overflow-y-auto pr-1 custom-scrollbar"></div>
+                    <div class="flex gap-1 border-t border-white/5 pt-2">
+                        <button id="ac-save-btn" class="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 bg-green-500/10 border border-green-500/30 text-[9px] font-bold text-green-400 hover:bg-green-500/20 hover:text-green-300 transition-all rounded-sm">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                            SAVE SETUP
+                        </button>
+                    </div>
+                </div>
+
+            </aside>
         </div>
     </div>
 
@@ -1041,6 +1309,8 @@
     <script src="js/cars/lmp2/oreca_07_gibson_lmp2.js"></script>
     <script src="js/cars/lmp3/ligier_js_p325_lmp3.js"></script>
     <script src="js/cars/lmp3/ginetta_g61_lmp3.js"></script>
+    <script src="js/cars/ac/mx5_cup.js"></script>
+    <script src="js/cars/ac/mx5_cup_tracks.js"></script>
     <div id="setup-tooltip"
         class="fixed hidden z-[9999] pointer-events-none w-64 p-3 bg-panel-alt border border-white/10 rounded shadow-2xl backdrop-blur-md transition-opacity duration-200 opacity-0">
         <div class="flex flex-col gap-2">
@@ -1067,6 +1337,7 @@
     <script src="js/utils.js"></script>
     <script src="js/physics.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/ac_app.js"></script>
 </body>
 
 </html>

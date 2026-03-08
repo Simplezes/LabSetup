@@ -87,6 +87,40 @@ if (els.modeAdvanced) els.modeAdvanced.onclick = () => setAppMode('advanced');
 const savedMode = localStorage.getItem('lma_mode') || 'basic';
 setAppMode(savedMode);
 
+// ── Game Selector ──────────────────────────────────────────────────────────
+const gameLMUBtn = document.getElementById('gameLMU');
+const gameACBtn = document.getElementById('gameAC');
+
+function setActiveGame(game) {
+    if (gameLMUBtn) gameLMUBtn.classList.toggle('active', game === 'lmu');
+    if (gameACBtn) gameACBtn.classList.toggle('active', game === 'ac');
+    document.body.setAttribute('data-game', game);
+    localStorage.setItem('lma_game', game);
+
+    if (game === 'ac') {
+        if (els.currentCar) els.currentCar.innerText = 'MAZDA MX-5 CUP';
+        if (els.currentCarClass) els.currentCarClass.innerText = 'TOURING';
+        if (window.AC_App) window.AC_App.init();
+    } else {
+        // Restore LMU car name
+        if (CAR) {
+            if (els.currentCar) els.currentCar.innerText = CAR.name.toUpperCase();
+            for (const [cls, { ids }] of Object.entries(CAR_CATEGORIES)) {
+                if (ids.includes(CAR.id)) {
+                    if (els.currentCarClass) els.currentCarClass.innerText = cls;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+if (gameLMUBtn) gameLMUBtn.onclick = () => setActiveGame('lmu');
+if (gameACBtn) gameACBtn.onclick = () => setActiveGame('ac');
+
+const savedGame = localStorage.getItem('lma_game') || 'lmu';
+setActiveGame(savedGame);
+
 
 let tiresLinked = true;
 if (els.linkTiresBtn) {
@@ -201,6 +235,31 @@ function renderMachineDropdown() {
     if (!els.machineDropdown || !window.CARS) return;
     els.machineDropdown.innerHTML = '';
 
+    // ── Assetto Corsa: show only AC cars ──────────────────────────────────────
+    if (document.body.getAttribute('data-game') === 'ac' && window.AC_CARS) {
+        const header = document.createElement('div');
+        header.className = 'dropdown-category';
+        header.style.color = '#ff6b35';
+        header.innerText = 'TOURING';
+        els.machineDropdown.appendChild(header);
+
+        Object.entries(window.AC_CARS).forEach(([id, acCar]) => {
+            const isActive = window.AC_App && window.AC_App.currentCarId === id;
+            const btn = document.createElement('button');
+            btn.className = `dropdown-item ${isActive ? 'active' : ''}`;
+            btn.innerHTML = `<span class="track-name">${acCar.name}</span>`;
+            btn.onclick = () => {
+                if (window.AC_App) window.AC_App.loadCar(id);
+                if (els.currentCar) els.currentCar.innerText = acCar.name.toUpperCase();
+                if (els.currentCarClass) els.currentCarClass.innerText = acCar.class;
+                els.machineDropdown.classList.remove('show');
+            };
+            els.machineDropdown.appendChild(btn);
+        });
+        return;
+    }
+
+    // ── LMU: show by class ────────────────────────────────────────────────────
     Object.entries(CAR_CATEGORIES).forEach(([className, { ids, color }]) => {
         const availableIds = ids.filter(id => window.CARS[id]);
         if (availableIds.length === 0) return;
