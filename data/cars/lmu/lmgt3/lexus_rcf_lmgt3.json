@@ -548,5 +548,34 @@
                 "rcam": -1.8
             }
         }
+    },
+    "physics": {
+        "weight_dist_f": 0.52,
+        "wheelbase_m": 2.73,
+        "motion_ratio": {
+            "front": 0.85,
+            "rear": 0.7
+        },
+        "aero": {
+            "base_cl": -2.75,
+            "base_cd": 0.68,
+            "cop_front": 0.37
+        },
+        "tyre_physics": {
+            "compound_medium": {
+                "pressure_range_kpa": [
+                    136,
+                    210
+                ],
+                "optimal_pressure_kpa": 190
+            },
+            "compound_wet": {
+                "pressure_range_kpa": [
+                    136,
+                    210
+                ],
+                "optimal_pressure_kpa": 200
+            }
+        }
     }
 }

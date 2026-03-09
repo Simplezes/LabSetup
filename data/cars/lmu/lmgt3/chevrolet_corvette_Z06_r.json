@@ -1,6 +1,35 @@
 {
     "id": "chevrolet_corvette_Z06_r",
     "name": "Chevrolet Corvette Z06 LMGT3.R",
+    "physics": {
+        "weight_dist_f": 0.435,
+        "wheelbase_m": 2.723,
+        "motion_ratio": {
+            "front": 0.78,
+            "rear": 0.75
+        },
+        "aero": {
+            "base_cl": -3.10,
+            "base_cd": 0.72,
+            "cop_front": 0.41
+        },
+        "tyre_physics": {
+            "compound_medium": {
+                "pressure_range_kpa": [
+                    136,
+                    210
+                ],
+                "optimal_pressure_kpa": 190.0
+            },
+            "compound_wet": {
+                "pressure_range_kpa": [
+                    136,
+                    210
+                ],
+                "optimal_pressure_kpa": 200.0
+            }
+        }
+    },
     "setupStructure": [
         {
             "group": "Tires & Brakes",

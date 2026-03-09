@@ -9,13 +9,11 @@ const gatherDefaults = (car) => {
 window.gatherDefaults = gatherDefaults;
 
 let DEFAULTS = {};
-let PHYSICS_DATA = null;
 let SELECTED_TRACK_ID = 'sarthe';
 
 // Make core state globally accessible since our modules will need it
 window.CAR = CAR;
 window.DEFAULTS = DEFAULTS;
-window.PHYSICS_DATA = PHYSICS_DATA;
 window.SELECTED_TRACK_ID = SELECTED_TRACK_ID;
 
 const els = window.LMA_UI ? window.LMA_UI.els : {};
@@ -25,11 +23,6 @@ function loadCar(carId) {
 
     window.CAR = window.CARS[carId];
     window.DEFAULTS = gatherDefaults(window.CAR);
-
-    if (window.PHYSICS_DATA && window.PHYSICS_DATA.cars) {
-        const p = window.PHYSICS_DATA.cars.find(c => c.id.toLowerCase() === carId.toLowerCase());
-        if (p) window.CAR.physics = { ...window.CAR.physics, ...p };
-    }
 
     const CAR = window.CAR;
 
@@ -304,31 +297,7 @@ function initAppInteractions() {
 
 }
 
-async function initPhysics() {
-    try {
-        const [lmgt3Res, lmp2Res, lmp3Res] = await Promise.all([
-            fetch('data/cars/lmu/lmgt3/physics_lmgt3.json'),
-            fetch('data/cars/lmu/lmp2/physics_lmp2.json'),
-            fetch('data/cars/lmu/lmp3/physics_lmp3.json')
-        ]);
 
-        const lmgt3Data = await lmgt3Res.json();
-        const lmp2Data = await lmp2Res.json();
-        const lmp3Data = await lmp3Res.json();
-
-        window.PHYSICS_DATA = {
-            cars: [...(lmgt3Data.cars || []), ...(lmp2Data.cars || []), ...(lmp3Data.cars || [])]
-        };
-
-        if (window.CAR && window.CAR.id && window.PHYSICS_DATA.cars) {
-            const p = window.PHYSICS_DATA.cars.find(c => c.id === window.CAR.id);
-            if (p) window.CAR.physics = { ...window.CAR.physics, ...p };
-        }
-        if (window.update) window.update();
-    } catch (e) {
-        console.error("Failed to load physics JSON files", e);
-    }
-}
 
 async function fetchAllCars() {
     window.CARS = window.CARS || {};
@@ -358,7 +327,6 @@ async function fetchAllCars() {
 
 async function initApp() {
     await fetchAllCars();
-    initPhysics();
     initAppInteractions();
 
     if (window.LMA_TracksManager) {
