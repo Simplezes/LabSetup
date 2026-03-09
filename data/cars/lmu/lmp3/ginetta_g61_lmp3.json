@@ -1,0 +1,393 @@
+{
+    "id": "ginetta_g61_lmp3",
+    "name": "Ginetta G61-LM P3",
+    "setupStructure": [
+        {
+            "group": "Tires & Brakes",
+            "items": [
+                {
+                    "id": "tpressure_f",
+                    "name": "Front Tire Pressure",
+                    "type": "numeric",
+                    "unit": "kPa",
+                    "min": 150,
+                    "max": 196,
+                    "step": 1
+                },
+                {
+                    "id": "tpressure_r",
+                    "name": "Rear Tire Pressure",
+                    "type": "numeric",
+                    "unit": "kPa",
+                    "min": 150,
+                    "max": 196,
+                    "step": 1
+                },
+                {
+                    "id": "fbd",
+                    "name": "Front Brake Duct",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Open",
+                            "value": 0
+                        },
+                        {
+                            "label": "33%",
+                            "value": 0.33
+                        },
+                        {
+                            "label": "67%",
+                            "value": 0.67
+                        },
+                        {
+                            "label": "Closed",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "rbd",
+                    "name": "Rear Brake Duct",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Open",
+                            "value": 0
+                        },
+                        {
+                            "label": "33%",
+                            "value": 0.33
+                        },
+                        {
+                            "label": "67%",
+                            "value": 0.67
+                        },
+                        {
+                            "label": "Closed",
+                            "value": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Suspension",
+            "items": [
+                {
+                    "id": "fh",
+                    "name": "Front Ride Height",
+                    "type": "numeric",
+                    "unit": "mm",
+                    "min": 40,
+                    "max": 60,
+                    "step": 0.5
+                },
+                {
+                    "id": "rh",
+                    "name": "Rear Ride Height",
+                    "type": "numeric",
+                    "unit": "mm",
+                    "min": 50,
+                    "max": 90,
+                    "step": 0.5
+                },
+                {
+                    "id": "fs",
+                    "name": "Front Springs",
+                    "type": "numeric",
+                    "unit": "N/mm",
+                    "min": 159,
+                    "max": 228,
+                    "step": 17.25
+                },
+                {
+                    "id": "rs",
+                    "name": "Rear Springs",
+                    "type": "numeric",
+                    "unit": "N/mm",
+                    "min": 219,
+                    "max": 455,
+                    "step": 16.85
+                },
+                {
+                    "id": "fpk",
+                    "name": "Front Packers",
+                    "type": "numeric",
+                    "unit": "mm",
+                    "min": 50,
+                    "max": 320,
+                    "step": 0.5
+                },
+                {
+                    "id": "rpk",
+                    "name": "Rear Packers",
+                    "type": "numeric",
+                    "unit": "mm",
+                    "min": 75,
+                    "max": 480,
+                    "step": 0.5
+                },
+                {
+                    "id": "farb",
+                    "name": "Front ARB",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 7,
+                    "step": 1
+                },
+                {
+                    "id": "rarb",
+                    "name": "Rear ARB",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 6,
+                    "step": 1
+                }
+            ]
+        },
+        {
+            "group": "Third Element",
+            "items": [
+                {
+                    "id": "third_Fspring",
+                    "name": "Front Heave Spring",
+                    "type": "numeric",
+                    "unit": "N/mm",
+                    "min": 0,
+                    "max": 150,
+                    "step": 20
+                },
+                {
+                    "id": "third_Rspring",
+                    "name": "Rear Heave Spring",
+                    "type": "numeric",
+                    "unit": "N/mm",
+                    "min": 0,
+                    "max": 500,
+                    "step": 25
+                },
+                {
+                    "id": "third_fpk",
+                    "name": "Front Heave Packers",
+                    "type": "numeric",
+                    "unit": "mm",
+                    "min": 5,
+                    "max": 35,
+                    "step": 0.5
+                },
+                {
+                    "id": "third_rpk",
+                    "name": "Rear Heave Packers",
+                    "type": "numeric",
+                    "unit": "mm",
+                    "min": 8,
+                    "max": 58,
+                    "step": 0.5
+                }
+            ]
+        },
+        {
+            "group": "Dampers",
+            "items": [
+                {
+                    "id": "fsb",
+                    "name": "Front Slow Bump",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 41,
+                    "step": 1
+                },
+                {
+                    "id": "fsr",
+                    "name": "Front Slow Rebound",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 25,
+                    "step": 1
+                },
+                {
+                    "id": "ffb",
+                    "name": "Front Fast Bump",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 49,
+                    "step": 1
+                },
+                {
+                    "id": "ffr",
+                    "name": "Front Fast Rebound",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 25,
+                    "step": 1
+                },
+                {
+                    "id": "rsb",
+                    "name": "Rear Slow Bump",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 41,
+                    "step": 1
+                },
+                {
+                    "id": "rsr",
+                    "name": "Rear Slow Rebound",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 25,
+                    "step": 1
+                },
+                {
+                    "id": "rfb",
+                    "name": "Rear Fast Bump",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 49,
+                    "step": 1
+                },
+                {
+                    "id": "rfr",
+                    "name": "Rear Fast Rebound",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 25,
+                    "step": 1
+                }
+            ]
+        },
+        {
+            "group": "Aero & Alignment",
+            "items": [
+                {
+                    "id": "wing",
+                    "name": "Rear Wing",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": 2.5,
+                    "max": 18.5,
+                    "step": 1
+                },
+                {
+                    "id": "ftoe",
+                    "name": "Front Toe",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -1.41,
+                    "max": 1.41,
+                    "step": 0.17625
+                },
+                {
+                    "id": "rtoe",
+                    "name": "Rear Toe",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -1.29,
+                    "max": 1.36,
+                    "step": 0.17625
+                },
+                {
+                    "id": "fcam",
+                    "name": "Front Camber",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -4,
+                    "max": -1,
+                    "step": 0.1
+                },
+                {
+                    "id": "rcam",
+                    "name": "Rear Camber",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -4,
+                    "max": 0,
+                    "step": 0.1
+                }
+            ]
+        }
+    ],
+    "presets": {
+        "Low Downforce": {
+            "desc": "Minimal wing and low-rake for high-speed circuits. Trades cornering grip for straight-line speed.",
+            "values": {
+                "wing": 2.5,
+                "fh": 43,
+                "rh": 57,
+                "fs": 175,
+                "rs": 245,
+                "farb": 2,
+                "rarb": 0
+            }
+        },
+        "High Downforce": {
+            "desc": "High rake and aggressive wing for maximum mechanical grip on technical circuits.",
+            "values": {
+                "wing": 14.5,
+                "fh": 47,
+                "rh": 76,
+                "fs": 211,
+                "rs": 295,
+                "farb": 4,
+                "rarb": 3
+            }
+        },
+        "Understeer": {
+            "desc": "Stable, safe balance for endurance stints. Stiff front ARB keeps the front planted.",
+            "values": {
+                "wing": 11.5,
+                "fh": 45,
+                "rh": 68,
+                "fs": 228,
+                "rs": 245,
+                "farb": 6,
+                "rarb": 0
+            }
+        },
+        "Oversteer": {
+            "desc": "High rear load and soft front for aggressive rotation on corner entry.",
+            "values": {
+                "wing": 9.5,
+                "fh": 43,
+                "rh": 80,
+                "fs": 175,
+                "rs": 320,
+                "farb": 1,
+                "rarb": 4
+            }
+        },
+        "Base": {
+            "values": {
+                "tpressure_f": 150,
+                "tpressure_r": 150,
+                "fbd": 0,
+                "rbd": 0,
+                "fh": 45.5,
+                "rh": 66,
+                "fs": 175,
+                "rs": 245,
+                "fpk": 100,
+                "rpk": 100,
+                "farb": 2,
+                "rarb": 1,
+                "third_Fspring": 0,
+                "third_Rspring": 0,
+                "third_fpk": 5,
+                "third_rpk": 8,
+                "fsb": 18,
+                "fsr": 4,
+                "ffb": 24,
+                "ffr": 16,
+                "rsb": 22,
+                "rsr": 4,
+                "rfb": 24,
+                "rfr": 16,
+                "wing": 6.5,
+                "ftoe": 0,
+                "rtoe": 0.3,
+                "fcam": -1.6,
+                "rcam": -1.4
+            }
+        }
+    }
+}

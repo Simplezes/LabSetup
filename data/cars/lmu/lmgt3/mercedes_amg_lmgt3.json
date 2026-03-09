@@ -1,0 +1,462 @@
+{
+    "id": "mercedes_amg_lmgt3",
+    "name": "Mercedes-AMG LMGT3",
+    "setupStructure": [
+        {
+            "group": "Tires & Brakes",
+            "items": [
+                {
+                    "id": "tpressure_f",
+                    "name": "Front Tire Pressure",
+                    "type": "numeric",
+                    "unit": "kPa",
+                    "min": 136,
+                    "max": 210,
+                    "step": 1
+                },
+                {
+                    "id": "tpressure_r",
+                    "name": "Rear Tire Pressure",
+                    "type": "numeric",
+                    "unit": "kPa",
+                    "min": 136,
+                    "max": 210,
+                    "step": 1
+                },
+                {
+                    "id": "fbd",
+                    "name": "Front Brake Duct",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Open",
+                            "value": 0
+                        },
+                        {
+                            "label": "25mm",
+                            "value": 0.2
+                        },
+                        {
+                            "label": "50mm",
+                            "value": 0.4
+                        },
+                        {
+                            "label": "75mm",
+                            "value": 0.6
+                        },
+                        {
+                            "label": "100mm",
+                            "value": 0.8
+                        },
+                        {
+                            "label": "125mm",
+                            "value": 0.9
+                        },
+                        {
+                            "label": "Closed",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "rbd",
+                    "name": "Rear Brake Duct",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Open",
+                            "value": 0
+                        },
+                        {
+                            "label": "25mm",
+                            "value": 0.2
+                        },
+                        {
+                            "label": "50mm",
+                            "value": 0.4
+                        },
+                        {
+                            "label": "75mm",
+                            "value": 0.6
+                        },
+                        {
+                            "label": "100mm",
+                            "value": 0.8
+                        },
+                        {
+                            "label": "125mm",
+                            "value": 0.9
+                        },
+                        {
+                            "label": "Closed",
+                            "value": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Suspension",
+            "items": [
+                {
+                    "id": "fh",
+                    "name": "Front Ride Height",
+                    "type": "numeric",
+                    "unit": "cm",
+                    "min": 5,
+                    "max": 7.5,
+                    "step": 0.1
+                },
+                {
+                    "id": "rh",
+                    "name": "Rear Ride Height",
+                    "type": "numeric",
+                    "unit": "cm",
+                    "min": 5,
+                    "max": 11,
+                    "step": 0.1
+                },
+                {
+                    "id": "fs",
+                    "name": "Front Springs",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 6,
+                    "step": 1
+                },
+                {
+                    "id": "rs",
+                    "name": "Rear Springs",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 6,
+                    "step": 1
+                },
+                {
+                    "id": "fpk",
+                    "name": "Front Packers",
+                    "type": "numeric",
+                    "unit": "cm",
+                    "min": 0,
+                    "max": 4,
+                    "step": 0.1
+                },
+                {
+                    "id": "rpk",
+                    "name": "Rear Packers",
+                    "type": "numeric",
+                    "unit": "cm",
+                    "min": 0,
+                    "max": 4,
+                    "step": 0.1
+                },
+                {
+                    "id": "farb",
+                    "name": "Front ARB",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "D1-D1 (50x3mm) (Soft)",
+                            "value": 0
+                        },
+                        {
+                            "label": "D1-D2 (50x3mm)",
+                            "value": 1
+                        },
+                        {
+                            "label": "D2-D2 (50x3mm)",
+                            "value": 2
+                        },
+                        {
+                            "label": "D2-D3 (50x3mm)",
+                            "value": 3
+                        },
+                        {
+                            "label": "D3-D3 (50x3mm)",
+                            "value": 4
+                        },
+                        {
+                            "label": "D3-D4 (50x3mm)",
+                            "value": 5
+                        },
+                        {
+                            "label": "D4-D4 (50x3mm)",
+                            "value": 6
+                        },
+                        {
+                            "label": "D4-D5 (50x3mm)",
+                            "value": 7
+                        },
+                        {
+                            "label": "D5-D5 (50x3mm)",
+                            "value": 8
+                        },
+                        {
+                            "label": "D5-D6 (50x3mm)",
+                            "value": 9
+                        },
+                        {
+                            "label": "D6-D6 (50x3mm) (Hard)",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "id": "rarb",
+                    "name": "Rear ARB",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "D1-D1 (30x3mm) (Soft)",
+                            "value": 0
+                        },
+                        {
+                            "label": "D1-D2 (30x3mm)",
+                            "value": 1
+                        },
+                        {
+                            "label": "D2-D2 (30x3mm)",
+                            "value": 2
+                        },
+                        {
+                            "label": "D2-D3 (30x3mm)",
+                            "value": 3
+                        },
+                        {
+                            "label": "D3-D3 (30x3mm)",
+                            "value": 4
+                        },
+                        {
+                            "label": "D3-D4 (30x3mm)",
+                            "value": 5
+                        },
+                        {
+                            "label": "D4-D4 (30x3mm) (Hard)",
+                            "value": 6
+                        },
+                        {
+                            "label": "D1-D1 (40x3mm)",
+                            "value": 7
+                        },
+                        {
+                            "label": "D1-D2 (40x3mm)",
+                            "value": 8
+                        },
+                        {
+                            "label": "D2-D2 (40x3mm)",
+                            "value": 9
+                        },
+                        {
+                            "label": "D2-D3 (40x3mm)",
+                            "value": 10
+                        },
+                        {
+                            "label": "D3-D3 (40x3mm)",
+                            "value": 11
+                        },
+                        {
+                            "label": "D3-D4 (40x3mm)",
+                            "value": 12
+                        },
+                        {
+                            "label": "D4-D4 (40x3mm) (Hard)",
+                            "value": 13
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Dampers",
+            "items": [
+                {
+                    "id": "fsb",
+                    "name": "Front Slow Bump",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 11,
+                    "step": 1
+                },
+                {
+                    "id": "fsr",
+                    "name": "Front Slow Rebound",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 11,
+                    "step": 1
+                },
+                {
+                    "id": "ffb",
+                    "name": "Front Fast Bump",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 11,
+                    "step": 1
+                },
+                {
+                    "id": "ffr",
+                    "name": "Front Fast Rebound",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 11,
+                    "step": 1
+                },
+                {
+                    "id": "rsb",
+                    "name": "Rear Slow Bump",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 11,
+                    "step": 1
+                },
+                {
+                    "id": "rsr",
+                    "name": "Rear Slow Rebound",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 11,
+                    "step": 1
+                },
+                {
+                    "id": "rfb",
+                    "name": "Rear Fast Bump",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 11,
+                    "step": 1
+                },
+                {
+                    "id": "rfr",
+                    "name": "Rear Fast Rebound",
+                    "type": "numeric",
+                    "min": 0,
+                    "max": 11,
+                    "step": 1
+                }
+            ]
+        },
+        {
+            "group": "Aero & Alignment",
+            "items": [
+                {
+                    "id": "wing",
+                    "name": "Rear Wing",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": 0,
+                    "max": 7,
+                    "step": 1
+                },
+                {
+                    "id": "ftoe",
+                    "name": "Front Toe",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -0.937,
+                    "max": 0.937,
+                    "step": 0.058
+                },
+                {
+                    "id": "rtoe",
+                    "name": "Rear Toe",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -0.937,
+                    "max": 0.937,
+                    "step": 0.058
+                },
+                {
+                    "id": "fcam",
+                    "name": "Front Camber",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -5.5,
+                    "max": -1,
+                    "step": 0.1
+                },
+                {
+                    "id": "rcam",
+                    "name": "Rear Camber",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -4.5,
+                    "max": -1,
+                    "step": 0.1
+                }
+            ]
+        }
+    ],
+    "presets": {
+        "Low Downforce": {
+            "values": {
+                "wing": 0,
+                "fh": 5,
+                "rh": 5.2,
+                "farb": 2,
+                "rarb": 2
+            }
+        },
+        "High Downforce": {
+            "values": {
+                "wing": 7,
+                "fh": 5.8,
+                "rh": 7.5,
+                "farb": 6,
+                "rarb": 7,
+                "fs": 4,
+                "rs": 6
+            }
+        },
+        "Understeer": {
+            "values": {
+                "farb": 10,
+                "rarb": 1,
+                "fs": 5,
+                "rs": 2,
+                "fh": 5.5,
+                "rh": 5.8,
+                "wing": 4
+            }
+        },
+        "Oversteer": {
+            "values": {
+                "farb": 1,
+                "rarb": 10,
+                "fs": 2,
+                "rs": 6,
+                "fh": 5,
+                "rh": 8.5,
+                "wing": 1
+            }
+        },
+        "Base": {
+            "values": {
+                "tpressure_f": 136,
+                "tpressure_r": 136,
+                "fbd": 0,
+                "rbd": 0,
+                "fh": 5.2,
+                "rh": 5.8,
+                "fs": 3,
+                "rs": 5,
+                "fpk": 0,
+                "rpk": 0,
+                "farb": 3,
+                "rarb": 4,
+                "fsb": 8,
+                "fsr": 8,
+                "ffb": 7,
+                "ffr": 9,
+                "rsb": 9,
+                "rsr": 7,
+                "rfb": 6,
+                "rfr": 8,
+                "wing": 1,
+                "ftoe": -0.117,
+                "rtoe": 0.117,
+                "fcam": -2.2,
+                "rcam": -1.5
+            }
+        }
+    }
+}

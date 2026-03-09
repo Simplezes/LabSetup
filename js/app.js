@@ -1,29 +1,14 @@
-let CAR = (window.CARS && window.CARS['bmw_m4_lmgt3']) ? window.CARS['bmw_m4_lmgt3'] : null;
-if (!CAR && window.CARS) CAR = Object.values(window.CARS)[0];
+let CAR = null;
 
-const gatherDefaults = (structure) => {
-    const defs = {};
-    if (!structure) return defs;
-    structure.forEach(group => {
-        group.items.forEach(item => {
-            if (item.type === 'labeled') {
-                const idx = item.default;
-                const opt = item.options && item.options[idx];
-                if (opt !== undefined) {
-                    defs[item.id] = (typeof opt === 'object' && opt.value !== undefined) ? opt.value : opt;
-                } else {
-                    defs[item.id] = item.default;
-                }
-            } else {
-                defs[item.id] = item.default;
-            }
-        });
-    });
-    return defs;
+const gatherDefaults = (car) => {
+    if (car && car.presets && car.presets["Base"] && car.presets["Base"].values) {
+        return { ...car.presets["Base"].values };
+    }
+    return car && car.defaults ? { ...car.defaults } : {};
 };
 window.gatherDefaults = gatherDefaults;
 
-let DEFAULTS = CAR && CAR.setupStructure ? gatherDefaults(CAR.setupStructure) : (CAR && CAR.defaults || {});
+let DEFAULTS = {};
 let PHYSICS_DATA = null;
 let SELECTED_TRACK_ID = 'sarthe';
 
@@ -35,43 +20,11 @@ window.SELECTED_TRACK_ID = SELECTED_TRACK_ID;
 
 const els = window.LMA_UI ? window.LMA_UI.els : {};
 
-// UI Initializer setup logic extracted from original app.js top section
-if (CAR && CAR.setupStructure) {
-    CAR.setupStructure.forEach(group => {
-        group.items.forEach(item => {
-            if (els[item.id]) {
-                const input = els[item.id];
-                if (item.type === 'labeled') {
-                    input.min = 0;
-                    input.max = item.options.length - 1;
-                    input.step = 1;
-                } else {
-                    input.min = item.min;
-                    input.max = item.max;
-                    input.step = item.step;
-                }
-                input.value = item.default;
-                if (window.updateSliderFill) window.updateSliderFill(input);
-            }
-        });
-    });
-} else if (CAR && CAR.ranges) {
-    Object.entries(CAR.ranges).forEach(([key, range]) => {
-        if (els[key]) {
-            els[key].min = range.min;
-            els[key].max = range.max;
-            els[key].step = range.step;
-            els[key].value = DEFAULTS[key];
-            if (window.updateSliderFill) window.updateSliderFill(els[key]);
-        }
-    });
-}
-
 function loadCar(carId) {
     if (!window.CARS || !window.CARS[carId]) return;
 
     window.CAR = window.CARS[carId];
-    window.DEFAULTS = window.CAR.setupStructure ? gatherDefaults(window.CAR.setupStructure) : (window.CAR.defaults || {});
+    window.DEFAULTS = gatherDefaults(window.CAR);
 
     if (window.PHYSICS_DATA && window.PHYSICS_DATA.cars) {
         const p = window.PHYSICS_DATA.cars.find(c => c.id.toLowerCase() === carId.toLowerCase());
@@ -114,7 +67,7 @@ function loadCar(carId) {
                         input.max = item.max;
                         input.step = item.step;
                     }
-                    input.value = item.default;
+                    input.value = window.DEFAULTS[item.id];
                     if (window.updateSliderFill) window.updateSliderFill(input);
                 }
             });
@@ -181,14 +134,14 @@ function initAppInteractions() {
                 view.classList.remove('hidden');
                 if (v === 'bars' || v === 'radar') view.classList.add('flex');
 
-                btn.classList.remove('text-slate-500', 'hover:text-slate-300', 'border-transparent', 'hover:border-white/10');
-                btn.classList.add('text-white', 'font-bold', 'bg-blue-500/20', 'border-blue-500/50', 'hover:bg-blue-500/40');
+                btn.classList.remove('text-slate-400', 'border-transparent', 'hover:text-white', 'hover:bg-white/5');
+                btn.classList.add('text-blue-400', 'bg-blue-500/20', 'border-blue-500/30', 'shadow-[0_0_10px_rgba(59,130,246,0.2)]', 'hover:bg-blue-500/30');
             } else {
                 view.classList.add('hidden');
                 if (v === 'bars' || v === 'radar') view.classList.remove('flex');
 
-                btn.classList.add('text-slate-500', 'hover:text-slate-300', 'border-transparent', 'hover:border-white/10');
-                btn.classList.remove('text-white', 'font-bold', 'bg-blue-500/20', 'border-blue-500/50', 'hover:bg-blue-500/40');
+                btn.classList.add('text-slate-400', 'border-transparent', 'hover:bg-white/5');
+                btn.classList.remove('text-blue-400', 'bg-blue-500/20', 'border-blue-500/30', 'shadow-[0_0_10px_rgba(59,130,246,0.2)]', 'hover:bg-blue-500/30');
             }
         });
     }
@@ -354,9 +307,9 @@ function initAppInteractions() {
 async function initPhysics() {
     try {
         const [lmgt3Res, lmp2Res, lmp3Res] = await Promise.all([
-            fetch('js/lmu/cars/lmgt3/physics_lmgt3.json'),
-            fetch('js/lmu/cars/lmp2/physics_lmp2.json'),
-            fetch('js/lmu/cars/lmp3/physics_lmp3.json')
+            fetch('data/cars/lmu/lmgt3/physics_lmgt3.json'),
+            fetch('data/cars/lmu/lmp2/physics_lmp2.json'),
+            fetch('data/cars/lmu/lmp3/physics_lmp3.json')
         ]);
 
         const lmgt3Data = await lmgt3Res.json();
@@ -377,7 +330,34 @@ async function initPhysics() {
     }
 }
 
-function initApp() {
+async function fetchAllCars() {
+    window.CARS = window.CARS || {};
+    const promises = [];
+    if (window.LMA_TracksManager && window.LMA_TracksManager.GAME_CATEGORIES) {
+        for (const [game, classes] of Object.entries(window.LMA_TracksManager.GAME_CATEGORIES)) {
+            if (game !== 'LMU') continue;
+            for (const [cls, { ids }] of Object.entries(classes)) {
+                for (const id of ids) {
+                    const url = `data/cars/lmu/${cls.toLowerCase()}/${id}.json`;
+                    promises.push(
+                        fetch(url).then(res => res.json()).then(data => {
+                            window.CARS[id] = data;
+                        }).catch(e => console.error("Failed to load car:", url, e))
+                    );
+                }
+            }
+        }
+    }
+    await Promise.all(promises);
+
+    if (Object.keys(window.CARS).length > 0) {
+        window.CAR = window.CARS['bmw_m4_lmgt3'] || Object.values(window.CARS)[0];
+        window.DEFAULTS = gatherDefaults(window.CAR);
+    }
+}
+
+async function initApp() {
+    await fetchAllCars();
     initPhysics();
     initAppInteractions();
 

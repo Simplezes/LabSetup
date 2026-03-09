@@ -1,0 +1,750 @@
+{
+    "id": "mclaren_720s_lmgt3_evo",
+    "name": "McLaren 720S LMGT3 EVO",
+    "setupStructure": [
+        {
+            "group": "Tires & Brakes",
+            "items": [
+                {
+                    "id": "tpressure_f",
+                    "name": "Front Tire Pressure",
+                    "type": "numeric",
+                    "unit": "kPa",
+                    "min": 136,
+                    "max": 210,
+                    "step": 1
+                },
+                {
+                    "id": "tpressure_r",
+                    "name": "Rear Tire Pressure",
+                    "type": "numeric",
+                    "unit": "kPa",
+                    "min": 136,
+                    "max": 210,
+                    "step": 1
+                },
+                {
+                    "id": "fbd",
+                    "name": "Front Brake Duct",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Open",
+                            "value": 0
+                        },
+                        {
+                            "label": "10%",
+                            "value": 0.1
+                        },
+                        {
+                            "label": "20%",
+                            "value": 0.2
+                        },
+                        {
+                            "label": "30%",
+                            "value": 0.3
+                        },
+                        {
+                            "label": "40%",
+                            "value": 0.4
+                        },
+                        {
+                            "label": "50%",
+                            "value": 0.5
+                        },
+                        {
+                            "label": "60%",
+                            "value": 0.6
+                        },
+                        {
+                            "label": "70%",
+                            "value": 0.7
+                        },
+                        {
+                            "label": "80%",
+                            "value": 0.8
+                        },
+                        {
+                            "label": "90%",
+                            "value": 0.9
+                        },
+                        {
+                            "label": "Closed",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "rbd",
+                    "name": "Rear Brake Duct",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Open",
+                            "value": 0
+                        },
+                        {
+                            "label": "10%",
+                            "value": 0.1
+                        },
+                        {
+                            "label": "20%",
+                            "value": 0.2
+                        },
+                        {
+                            "label": "30%",
+                            "value": 0.3
+                        },
+                        {
+                            "label": "40%",
+                            "value": 0.4
+                        },
+                        {
+                            "label": "50%",
+                            "value": 0.5
+                        },
+                        {
+                            "label": "60%",
+                            "value": 0.6
+                        },
+                        {
+                            "label": "70%",
+                            "value": 0.7
+                        },
+                        {
+                            "label": "80%",
+                            "value": 0.8
+                        },
+                        {
+                            "label": "90%",
+                            "value": 0.9
+                        },
+                        {
+                            "label": "Closed",
+                            "value": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Suspension",
+            "items": [
+                {
+                    "id": "fh",
+                    "name": "Front Ride Height",
+                    "type": "numeric",
+                    "unit": "cm",
+                    "min": 5,
+                    "max": 8.1,
+                    "step": 0.1
+                },
+                {
+                    "id": "rh",
+                    "name": "Rear Ride Height",
+                    "type": "numeric",
+                    "unit": "cm",
+                    "min": 5.9,
+                    "max": 9.5,
+                    "step": 0.1
+                },
+                {
+                    "id": "fs",
+                    "name": "Front Springs",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 6,
+                    "step": 1
+                },
+                {
+                    "id": "rs",
+                    "name": "Rear Springs",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 6,
+                    "step": 1
+                },
+                {
+                    "id": "tender_f",
+                    "name": "Tender Spring (F)",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Off",
+                            "value": 0
+                        },
+                        {
+                            "label": "Standard",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "fpk",
+                    "name": "Front Packers",
+                    "type": "numeric",
+                    "unit": "cm",
+                    "min": 0,
+                    "max": 4,
+                    "step": 0.1
+                },
+                {
+                    "id": "rpk",
+                    "name": "Rear Packers",
+                    "type": "numeric",
+                    "unit": "cm",
+                    "min": 0,
+                    "max": 4,
+                    "step": 0.1
+                },
+                {
+                    "id": "farb",
+                    "name": "Front ARB",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Detached",
+                            "value": 0
+                        },
+                        {
+                            "label": "P1 14mm",
+                            "value": 1
+                        },
+                        {
+                            "label": "P2 14mm",
+                            "value": 2
+                        },
+                        {
+                            "label": "P3 14mm",
+                            "value": 3
+                        },
+                        {
+                            "label": "P4 14mm",
+                            "value": 4
+                        },
+                        {
+                            "label": "P1 20x2mm",
+                            "value": 5
+                        },
+                        {
+                            "label": "P2 20x2mm",
+                            "value": 6
+                        },
+                        {
+                            "label": "P3 20x2mm",
+                            "value": 7
+                        },
+                        {
+                            "label": "P4 20x2mm",
+                            "value": 8
+                        },
+                        {
+                            "label": "P1 25x2mm",
+                            "value": 9
+                        },
+                        {
+                            "label": "P2 25x2mm",
+                            "value": 10
+                        },
+                        {
+                            "label": "P3 25x2mm",
+                            "value": 11
+                        },
+                        {
+                            "label": "P4 25x2mm",
+                            "value": 12
+                        }
+                    ]
+                },
+                {
+                    "id": "rarb",
+                    "name": "Rear ARB",
+                    "type": "labeled",
+                    "options": [
+                        {
+                            "label": "Detached",
+                            "value": 0
+                        },
+                        {
+                            "label": "P1 18x2mm",
+                            "value": 1
+                        },
+                        {
+                            "label": "P2 18x2mm",
+                            "value": 2
+                        },
+                        {
+                            "label": "P3 18x2mm",
+                            "value": 3
+                        },
+                        {
+                            "label": "P4 18x2mm",
+                            "value": 4
+                        },
+                        {
+                            "label": "P5 18x2mm",
+                            "value": 5
+                        },
+                        {
+                            "label": "P1 20x2mm",
+                            "value": 6
+                        },
+                        {
+                            "label": "P2 20x2mm",
+                            "value": 7
+                        },
+                        {
+                            "label": "P3 20x2mm",
+                            "value": 8
+                        },
+                        {
+                            "label": "P4 20x2mm",
+                            "value": 9
+                        },
+                        {
+                            "label": "P5 20x2mm",
+                            "value": 10
+                        },
+                        {
+                            "label": "P1 25x2mm",
+                            "value": 11
+                        },
+                        {
+                            "label": "P2 25x2mm",
+                            "value": 12
+                        },
+                        {
+                            "label": "P3 25x2mm",
+                            "value": 13
+                        },
+                        {
+                            "label": "P4 25x2mm",
+                            "value": 14
+                        },
+                        {
+                            "label": "P5 25x2mm",
+                            "value": 15
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Dampers",
+            "items": [
+                {
+                    "id": "fsb",
+                    "name": "Front Slow Bump",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 41,
+                    "step": 1,
+                    "prefix": "B",
+                    "reverse": true
+                },
+                {
+                    "id": "fsr",
+                    "name": "Front Slow Rebound",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 41,
+                    "step": 1,
+                    "prefix": "R",
+                    "reverse": true
+                },
+                {
+                    "id": "ffb",
+                    "name": "Front Fast Bump",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 51,
+                    "step": 1,
+                    "prefix": "B",
+                    "reverse": true
+                },
+                {
+                    "id": "ffr",
+                    "name": "Front Fast Rebound",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 51,
+                    "step": 1,
+                    "prefix": "R",
+                    "reverse": true
+                },
+                {
+                    "id": "rsb",
+                    "name": "Rear Slow Bump",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 41,
+                    "step": 1,
+                    "prefix": "B",
+                    "reverse": true
+                },
+                {
+                    "id": "rsr",
+                    "name": "Rear Slow Rebound",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 41,
+                    "step": 1,
+                    "prefix": "R",
+                    "reverse": true
+                },
+                {
+                    "id": "rfb",
+                    "name": "Rear Fast Bump",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 51,
+                    "step": 1,
+                    "prefix": "B",
+                    "reverse": true
+                },
+                {
+                    "id": "rfr",
+                    "name": "Rear Fast Rebound",
+                    "type": "numeric",
+                    "min": 1,
+                    "max": 51,
+                    "step": 1,
+                    "prefix": "R",
+                    "reverse": true
+                }
+            ]
+        },
+        {
+            "group": "Aero & Alignment",
+            "items": [
+                {
+                    "id": "wing",
+                    "name": "Rear Wing",
+                    "type": "labeled",
+                    "unit": "deg",
+                    "options": [
+                        {
+                            "label": "1.75 deg",
+                            "value": 1.75
+                        },
+                        {
+                            "label": "2.10 deg",
+                            "value": 2.1
+                        },
+                        {
+                            "label": "2.40 deg",
+                            "value": 2.4
+                        },
+                        {
+                            "label": "2.70 deg",
+                            "value": 2.7
+                        },
+                        {
+                            "label": "3.00 deg",
+                            "value": 3
+                        },
+                        {
+                            "label": "3.30 deg",
+                            "value": 3.3
+                        },
+                        {
+                            "label": "3.60 deg",
+                            "value": 3.6
+                        },
+                        {
+                            "label": "3.90 deg",
+                            "value": 3.9
+                        },
+                        {
+                            "label": "4.20 deg",
+                            "value": 4.2
+                        },
+                        {
+                            "label": "4.50 deg",
+                            "value": 4.5
+                        },
+                        {
+                            "label": "4.80 deg",
+                            "value": 4.8
+                        },
+                        {
+                            "label": "5.10 deg",
+                            "value": 5.1
+                        },
+                        {
+                            "label": "5.40 deg",
+                            "value": 5.4
+                        },
+                        {
+                            "label": "5.70 deg",
+                            "value": 5.7
+                        },
+                        {
+                            "label": "6.10 deg",
+                            "value": 6.1
+                        },
+                        {
+                            "label": "6.40 deg",
+                            "value": 6.4
+                        },
+                        {
+                            "label": "6.70 deg",
+                            "value": 6.7
+                        },
+                        {
+                            "label": "7.00 deg",
+                            "value": 7
+                        },
+                        {
+                            "label": "7.30 deg",
+                            "value": 7.3
+                        },
+                        {
+                            "label": "7.60 deg",
+                            "value": 7.6
+                        },
+                        {
+                            "label": "7.90 deg",
+                            "value": 7.9
+                        },
+                        {
+                            "label": "8.20 deg",
+                            "value": 8.2
+                        },
+                        {
+                            "label": "8.50 deg",
+                            "value": 8.5
+                        },
+                        {
+                            "label": "8.80 deg",
+                            "value": 8.8
+                        },
+                        {
+                            "label": "9.10 deg",
+                            "value": 9.1
+                        },
+                        {
+                            "label": "9.40 deg",
+                            "value": 9.4
+                        },
+                        {
+                            "label": "9.70 deg",
+                            "value": 9.7
+                        },
+                        {
+                            "label": "10.00 deg",
+                            "value": 10
+                        },
+                        {
+                            "label": "10.40 deg",
+                            "value": 10.4
+                        },
+                        {
+                            "label": "10.70 deg",
+                            "value": 10.7
+                        }
+                    ]
+                },
+                {
+                    "id": "ldwing",
+                    "name": "Rear Wing",
+                    "type": "labeled",
+                    "unit": "deg",
+                    "options": [
+                        {
+                            "label": "4.80 deg",
+                            "value": 4.8
+                        },
+                        {
+                            "label": "5.10 deg",
+                            "value": 5.1
+                        },
+                        {
+                            "label": "5.40 deg",
+                            "value": 5.4
+                        },
+                        {
+                            "label": "5.70 deg",
+                            "value": 5.7
+                        },
+                        {
+                            "label": "6.10 deg",
+                            "value": 6.1
+                        },
+                        {
+                            "label": "6.40 deg",
+                            "value": 6.4
+                        },
+                        {
+                            "label": "6.70 deg",
+                            "value": 6.7
+                        },
+                        {
+                            "label": "7.00 deg",
+                            "value": 7
+                        },
+                        {
+                            "label": "7.30 deg",
+                            "value": 7.3
+                        },
+                        {
+                            "label": "7.60 deg",
+                            "value": 7.6
+                        },
+                        {
+                            "label": "7.90 deg",
+                            "value": 7.9
+                        },
+                        {
+                            "label": "8.20 deg",
+                            "value": 8.2
+                        },
+                        {
+                            "label": "8.50 deg",
+                            "value": 8.5
+                        },
+                        {
+                            "label": "8.80 deg",
+                            "value": 8.8
+                        },
+                        {
+                            "label": "9.10 deg",
+                            "value": 9.1
+                        },
+                        {
+                            "label": "9.40 deg",
+                            "value": 9.4
+                        },
+                        {
+                            "label": "9.70 deg",
+                            "value": 9.7
+                        },
+                        {
+                            "label": "10.00 deg",
+                            "value": 10
+                        },
+                        {
+                            "label": "10.40 deg",
+                            "value": 10.4
+                        },
+                        {
+                            "label": "10.70 deg",
+                            "value": 10.7
+                        }
+                    ]
+                },
+                {
+                    "id": "ftoe",
+                    "name": "Front Toe",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -0.937,
+                    "max": 0.937,
+                    "step": 0.117
+                },
+                {
+                    "id": "rtoe",
+                    "name": "Rear Toe",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -0.937,
+                    "max": 0.937,
+                    "step": 0.117
+                },
+                {
+                    "id": "fcam",
+                    "name": "Front Camber",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -4.6,
+                    "max": -1.6,
+                    "step": 0.2
+                },
+                {
+                    "id": "rcam",
+                    "name": "Rear Camber",
+                    "type": "numeric",
+                    "unit": "deg",
+                    "min": -4.5,
+                    "max": -1.1,
+                    "step": 0.2
+                }
+            ]
+        }
+    ],
+    "presets": {
+        "Low Downforce": {
+            "values": {
+                "wing": 5.4,
+                "fh": 5,
+                "rh": 5.9,
+                "farb": 4,
+                "rarb": 3
+            }
+        },
+        "High Downforce": {
+            "values": {
+                "wing": 10.5,
+                "fh": 5.6,
+                "rh": 7.5,
+                "farb": 8,
+                "rarb": 5,
+                "fs": 5,
+                "rs": 5
+            }
+        },
+        "Understeer": {
+            "values": {
+                "farb": 10,
+                "rarb": 1,
+                "fs": 5,
+                "rs": 1,
+                "fh": 5.6,
+                "rh": 6,
+                "wing": 9
+            }
+        },
+        "Oversteer": {
+            "values": {
+                "farb": 3,
+                "rarb": 10,
+                "fs": 2,
+                "rs": 6,
+                "fh": 5,
+                "rh": 8.8,
+                "wing": 6
+            }
+        },
+        "Base": {
+            "values": {
+                "tpressure_f": 136,
+                "tpressure_r": 136,
+                "fbd": 0.3,
+                "rbd": 0.3,
+                "fh": 5.4,
+                "rh": 7,
+                "fs": 4,
+                "rs": 4,
+                "tender_f": 1,
+                "fpk": 0,
+                "rpk": 0,
+                "farb": 5,
+                "rarb": 3,
+                "fsb": 26,
+                "fsr": 20,
+                "ffb": 28,
+                "ffr": 28,
+                "rsb": 14,
+                "rsr": 15,
+                "rfb": 40,
+                "rfr": 42,
+                "wing": 6.4,
+                "ldwing": 23,
+                "ftoe": -0.117,
+                "rtoe": 0.234,
+                "fcam": -2.2,
+                "rcam": -1.9
+            }
+        }
+    }
+}
