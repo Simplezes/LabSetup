@@ -174,6 +174,30 @@ const TOOLTIP_DATA = {
         desc: 'Adjusts the limited travel of the rear third spring.',
         inc: 'Increases the effective spring rate sooner, preventing rear heave travel at high aero loads.',
         dec: 'Allows more rear suspension travel before the packers engage.'
+    },
+    'bal_aero_shift': {
+        title: 'Aero Shift',
+        desc: 'High-speed aerodynamic balance shift.',
+        inc: 'If Fwd > 5%, car will oversteer in fast sweepers.',
+        dec: 'Shift aero rearwards by adding rear wing or lowering rear ride height.'
+    },
+    'bal_low_speed': {
+        title: 'Low Speed Balance',
+        desc: 'Low-speed mechanical grip split between the front and rear axles.',
+        inc: '"Snappy" (Oversteer) means the rear is too stiff compared to the front.',
+        dec: 'Soften rear springs/ARB or stiffen the front to cure oversteer.'
+    },
+    'bal_dive': {
+        title: 'Braking Dive',
+        desc: 'How much the nose pitches down under heavy braking.',
+        inc: 'If High, you risk bottoming out the front aerodynamic splitter and losing grip.',
+        dec: 'Stiffen front springs or slow bump dampers to reduce dive.'
+    },
+    'bal_squat': {
+        title: 'Acceleration Squat',
+        desc: 'How much the rear drops under throttle.',
+        inc: 'If High, the nose lifts and you lose front aerodynamic grip on corner exit.',
+        dec: 'Stiffen rear springs or slow bump dampers to reduce squat.'
     }
 };
 

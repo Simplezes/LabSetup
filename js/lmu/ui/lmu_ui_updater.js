@@ -597,6 +597,54 @@ function update() {
             els.trackTempV.classList.add('text-red-500'); // Hot
         }
     }
+
+    // --- Granular Steering Balance Telemetry ---
+    const aeroBalanceTxt = document.getElementById('aeroBalanceTxt');
+    const mechBalanceTxt = document.getElementById('mechBalanceTxt');
+    const diveTxt = document.getElementById('diveTxt');
+    const squatTxt = document.getElementById('squatTxt');
+
+    if (aeroBalanceTxt) {
+        // copShift measures how far the aero pushes forwards or backwards
+        const aeroShiftPct = Math.min(Math.max((copShift / 20) * 100, -100), 100).toFixed(1);
+        if (aeroShiftPct > 5) {
+            aeroBalanceTxt.innerText = `${Math.abs(aeroShiftPct)}% Fwd`;
+            aeroBalanceTxt.className = "text-[9px] font-bold text-red-400"; // Forward = Oversteer
+        } else if (aeroShiftPct < -5) {
+            aeroBalanceTxt.innerText = `${Math.abs(aeroShiftPct)}% Rwd`;
+            aeroBalanceTxt.className = "text-[9px] font-bold text-blue-400"; // Rearward = Understeer
+        } else {
+            aeroBalanceTxt.innerText = `Stable`;
+            aeroBalanceTxt.className = "text-[9px] font-bold text-slate-300";
+        }
+    }
+
+    if (mechBalanceTxt) {
+        // Evaluate slow-speed mechanical grip split
+        if (lltd > 0.05) {
+            mechBalanceTxt.innerText = "Understeer";
+            mechBalanceTxt.className = "text-[9px] font-bold text-blue-400"; // Stiff Front Bias
+        } else if (lltd < -0.05) {
+            mechBalanceTxt.innerText = "Snappy";
+            mechBalanceTxt.className = "text-[9px] font-bold text-red-400"; // Stiff Rear Bias
+        } else {
+            mechBalanceTxt.innerText = "Balanced";
+            mechBalanceTxt.className = "text-[9px] font-bold text-slate-300";
+        }
+    }
+
+    if (diveTxt && squatTxt) {
+        // nFSpring + nFSB dictates dive severity, nRSpring + nRSB dictates squat
+        const diveStiffness = nFS + nFSB;
+        const squatStiffness = nRS + nRSB;
+
+        diveTxt.innerText = diveStiffness < -0.2 ? "High" : (diveStiffness > 0.2 ? "Min" : "Avg");
+        diveTxt.className = diveStiffness < -0.2 ? "text-[9px] font-bold text-amber-400" : "text-[9px] font-bold text-slate-300";
+
+        squatTxt.innerText = squatStiffness < -0.2 ? "High" : (squatStiffness > 0.2 ? "Min" : "Avg");
+        squatTxt.className = squatStiffness < -0.2 ? "text-[9px] font-bold text-amber-400" : "text-[9px] font-bold text-slate-300";
+    }
+
 }
 
 window.updateSliderFill = updateSliderFill;
